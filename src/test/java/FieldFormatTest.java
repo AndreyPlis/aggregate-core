@@ -20,4 +20,8 @@ public class FieldFormatTest {
     public void createIntFieldFormatFromFactory() {
 
     }
+
+    // convert to and from string
+    //clone
+    //hashcode equals
 }
