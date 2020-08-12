@@ -6,13 +6,24 @@ public abstract class FieldFormat<T> implements Cloneable{
     private String name;
     private String description;
     private Boolean nullable;
+    private Boolean hidden;
+    private T defaultValue;
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
+    public static final char BOOLEAN_FIELD = 'B';
 
     public abstract String valueToString(T value);
 
     public abstract T valueFromString(String value);
+
+    public Boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
 
     public String getName() {
         return name;
@@ -41,17 +52,33 @@ public abstract class FieldFormat<T> implements Cloneable{
     }
 
     @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
     public boolean equals(Object o) {
-        throw new UnsupportedOperationException();
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FieldFormat<?> that = (FieldFormat<?>) o;
+        return name.equals(that.name) &&
+                description.equals(that.description) &&
+                nullable.equals(that.nullable) &&
+                hidden.equals( that.hidden );
     }
 
     @Override
     public int hashCode() {
-        throw new UnsupportedOperationException();
+        return Objects.hash(name, description, nullable, hidden);
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException();
+        return "FieldFormat{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", nullable=" + nullable + '\'' +
+                ", hidden=" + hidden +
+                '}';
     }
 }
