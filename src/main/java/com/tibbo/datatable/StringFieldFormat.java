@@ -12,4 +12,9 @@ public class StringFieldFormat extends FieldFormat<String> {
     public char getType() {
         return FieldFormat.STRING_FIELD;
     }
+
+    @Override
+    public String valueFromString(String value) {
+        return value;
+    }
 }
