@@ -6,8 +6,9 @@ public abstract class FieldFormat<T> implements Cloneable{
     private String name;
     private String description;
     private Boolean nullable;
-    private Boolean hidden;
-    private T defaultValue;
+    private Boolean hidden = false;
+    private T value;
+    //private T defaultValue;
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
@@ -51,6 +52,14 @@ public abstract class FieldFormat<T> implements Cloneable{
         this.nullable = nullable;
     }
 
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
+
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
@@ -77,7 +86,7 @@ public abstract class FieldFormat<T> implements Cloneable{
         return "FieldFormat{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", nullable=" + nullable + '\'' +
+                ", nullable=" + nullable +
                 ", hidden=" + hidden +
                 '}';
     }

@@ -1,7 +1,8 @@
 package com.tibbo.datatable;
 
 public class StringFieldFormat extends FieldFormat<String> {
-    private String defaultValue = "text";
+    private final String defaultValue = "text";
+
     @Override
     public String valueToString(String value) {
         return value;
@@ -16,5 +17,4 @@ public class StringFieldFormat extends FieldFormat<String> {
     public char getType() {
         return FieldFormat.STRING_FIELD;
     }
-
 }

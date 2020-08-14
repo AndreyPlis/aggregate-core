@@ -3,9 +3,8 @@ package com.tibbo.datatable;
 import java.util.*;
 
 public class TableFormat implements Cloneable {
-    private int min;
-    private int max;
-    private int rowCount;
+    private int min = 0;
+    private int max = 0;
     private List<FieldFormat> fields = new ArrayList<>();
 
     public void addField(FieldFormat fieldFormat)
@@ -34,11 +33,32 @@ public class TableFormat implements Cloneable {
         this.max = max;
     }
 
-    public int getRowCount() {
-        return rowCount;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TableFormat that = (TableFormat) o;
+        return min == that.min &&
+                max == that.max &&
+                fields.equals(that.fields);
     }
 
-    public void setRowCount(int rowCount) {
-        this.rowCount = rowCount;
+    @Override
+    public int hashCode() {
+        return Objects.hash(min, max, fields);
+    }
+
+    @Override
+    public String toString() {
+        return "TableFormat{" +
+                "min=" + min +
+                ", max=" + max +
+                ", fields=" + fields +
+                '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

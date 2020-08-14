@@ -1,7 +1,8 @@
 package com.tibbo.datatable;
 
 public class BooleanFieldFormat extends FieldFormat<Boolean> {
-    private Boolean defaultValue = true;
+    private final Boolean defaultValue = true;
+
     @Override
     public String valueToString(Boolean value) {
         return value.toString( );
