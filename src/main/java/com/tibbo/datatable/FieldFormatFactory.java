@@ -1,15 +1,23 @@
 package com.tibbo.datatable;
 
-public class FieldFormatFactory {
+public abstract class FieldFormatFactory {
 
     public static FieldFormat createFieldFormat(Character type, String name, String description) {
-        FieldFormat ff = null;
+        /*FieldFormat ff = null;
         if (type == FieldFormat.STRING_FIELD)
             ff = new StringFieldFormat();
         else if (type == FieldFormat.INTEGER_FIELD)
             ff = new IntFieldFormat();
         ff.setName(name);
         ff.setDescription(description);
-        return ff;
+        return ff;*/
+        if(type == FieldFormat.STRING_FIELD){
+            return new StringFieldFormatCreator().create(name,description);
+        }
+        if(type == FieldFormat.INTEGER_FIELD){
+            return new IntFieldFormatCreator().create(name, description);
+        }
+
+        return null;
     }
 }
