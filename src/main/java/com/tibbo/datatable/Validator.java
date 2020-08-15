@@ -1,9 +1,11 @@
 package com.tibbo.datatable;
 
-public interface Validator<T> {
-    boolean isValid(T value);
+public interface Validator {
+    <T> void nullFieldValidator(T value);
 
-    void getErrorMessage();
+    void limitsValidator(int value);
 
-    void Validation(T value);
+    void regexValidation(String value);
+
+    void lengthFieldValidator(String value);
 }

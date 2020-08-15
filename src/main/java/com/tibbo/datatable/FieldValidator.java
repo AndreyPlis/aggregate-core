@@ -1,54 +1,37 @@
 package com.tibbo.datatable;
 
-import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class FieldValidator implements Validator<FieldFormat<?>> {
+public class FieldValidator extends Validators {
 
-    private final ArrayList<String> errorMessage = new ArrayList<>();
+    @Override
+    public <T> void nullFieldValidator(T value) {
+        if (value == null)
+            throw new NullPointerException("Значение не может быть равно нулю");
+    }
 
-    public void Validation(FieldFormat<?> value) {
-        FieldValidator fieldValidator = new FieldValidator();
-        if (fieldValidator.isValid(value)) {
-            System.out.println("Ok");
-        } else {
-            fieldValidator.getErrorMessage();
+    @Override
+    public void limitsValidator(int value) {
+        int startValueLimits = 10;
+        int endValueLimits = 20;
+        if (value <= startValueLimits || value >= endValueLimits) {
+            throw new IllegalArgumentException(String.format("Значение должно быть в диапазоне от %d до %d", startValueLimits, endValueLimits));
         }
     }
 
     @Override
-    public boolean isValid(FieldFormat<?> value) {
-        if (value == null) {
-            errorMessage.add("FieldFormat must not be null");
-        }
-
-        final String name = value.getName();
-        if (name == null) {
-            errorMessage.add("Name must not be null");
-        }
-        final String description = value.getDescription();
-        if (description == null) {
-            errorMessage.add("Description must not be null");
-        }
-        final Boolean nullable = value.getNullable();
-        if (nullable == null) {
-            errorMessage.add("Nullable must not be null");
-        }
-        final Boolean hidden = value.getHidden();
-        if (hidden == null) {
-            errorMessage.add("Hidden must not be null");
-        }
-        final String defaultValue = value.getDefaultValue();
-        if (defaultValue == null) {
-            errorMessage.add("DefaultValue must not be null");
-            return false;
-        }
-        return true;
+    public void regexValidation(String value) {
+        Pattern regex = Pattern.compile("\\A-Z{1}[a-z]+");
+        Matcher matcher = regex.matcher(value);
+        if (!matcher.find())
+            throw new IllegalArgumentException("Строка не соответствует шаблону");
     }
 
-
     @Override
-    public void getErrorMessage() {
-        for (String s : errorMessage)
-            System.out.println(s);
+    public void lengthFieldValidator(String value) {
+        int lengthField = 50;
+        if (value.length() < lengthField)
+            throw new IllegalArgumentException("Превышение количества символов");
     }
 }
