@@ -6,6 +6,8 @@ public abstract class FieldFormat<T> implements Cloneable{
     private String name;
     private String description;
     private Boolean nullable;
+    private Boolean hidden;
+    private T defaultValue;
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
@@ -41,6 +43,22 @@ public abstract class FieldFormat<T> implements Cloneable{
         this.nullable = nullable;
     }
 
+    public Boolean getHidden(){
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden){
+        this.hidden = hidden;
+    }
+
+    public T getDefaultValue(){
+        return defaultValue;
+    }
+
+    public void setDefaultValue(T defaultValue){
+        this.defaultValue = defaultValue;
+    }
+
     @Override
     public boolean equals(Object o) {
         //Remove placeholder: throw new UnsupportedOperationException();
@@ -55,7 +73,11 @@ public abstract class FieldFormat<T> implements Cloneable{
                 ||
                 (description == fieldFormat.description || (description != null && description.equals(fieldFormat.getDescription())) )
                 ||
-                (nullable == fieldFormat.nullable || (nullable != null && nullable.equals(fieldFormat.getNullable())) );
+                (nullable == fieldFormat.nullable || (nullable != null && nullable.equals(fieldFormat.getNullable())) )
+                ||
+                (hidden == fieldFormat.hidden || (hidden != null && hidden.equals(fieldFormat.getHidden())) )
+                ||
+                (defaultValue == fieldFormat.defaultValue || (defaultValue != null && defaultValue.equals(fieldFormat.getDefaultValue())) );
     }
 
     @Override
@@ -66,6 +88,8 @@ public abstract class FieldFormat<T> implements Cloneable{
         result = prime * result + (name == null ? 0 : name.hashCode());
         result = prime * result + (description == null ? 0 : description.hashCode());
         result = prime * result + (nullable == null ? 0 : nullable.hashCode());
+        result = prime * result + (hidden == null ? 0 : hidden.hashCode());
+        result = prime * result + (defaultValue == null ? 0 : defaultValue.hashCode());
         return result;
     }
 
@@ -75,7 +99,9 @@ public abstract class FieldFormat<T> implements Cloneable{
         String result;
         result = "name: " + (name == null ? "null" : name) + "; ";
         result += "description: " + (description == null ? "null" : description) + "; ";
-        result += "nullable: " + (nullable == null ? "null" : nullable.toString()) + ".";
+        result += "nullable: " + (nullable == null ? "null" : nullable.toString()) + ";";
+        result += "hidden: " + (hidden == null ? "null" : hidden.toString()) + ";";
+        result += "default value: " + (defaultValue == null ? "null" : defaultValue.toString()) + ".";
         return result;
     }
 
