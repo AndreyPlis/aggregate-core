@@ -92,7 +92,7 @@ public abstract class FieldFormat<T> implements Cloneable {
         try {
             return (FieldFormat<?>) super.clone();
         } catch (CloneNotSupportedException e) {
-            throw new AssertionError("Невозможно");
+            throw new IllegalStateException("Невозможно", e);
         }
     }
 

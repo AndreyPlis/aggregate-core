@@ -8,13 +8,12 @@ public class TableFormat implements Cloneable {
 
     private List<FieldFormat<?>> fields = new ArrayList<>();
 
-    public TableFormat() {
-    }
-
     public TableFormat(int min, int max) {
+        if (min > max) {
+            throw new IllegalArgumentException("minCountField must be greater than maxCountField");
+        }
         this.minCountField = min;
         this.maxCountField = max;
-
     }
 
     public int getMinCountField() {
@@ -71,10 +70,11 @@ public class TableFormat implements Cloneable {
         try {
             copy = (TableFormat) super.clone();
             copy.fields = new ArrayList<>(fields.size());
-            for (FieldFormat<?> f : fields)
+            for (FieldFormat<?> f : fields) {
                 copy.fields.add(f.clone());
+            }
         } catch (CloneNotSupportedException e) {
-            throw new AssertionError("Невозможно");
+            throw new IllegalStateException("Невозможно", e);
         }
         return copy;
     }
