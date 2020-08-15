@@ -5,7 +5,7 @@ import java.util.*;
 public abstract class FieldFormat<T> implements Cloneable{
     private String name;
     private String description;
-    private Boolean nullable;
+    private Boolean nullable = true;
     private Boolean hidden = false;
     private T value;
     //private T defaultValue;

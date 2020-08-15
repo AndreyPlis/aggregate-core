@@ -29,21 +29,16 @@ public class FieldFormatTest {
         assertEquals(1234, ff.valueFromString( "1234" ) );
         assertEquals("1234", ff.valueToString( 1234 ) );
     }
-    @Test
-    //clone
-    public void cloneIntFieldFormat( ){
-        IntFieldFormat ff = new IntFieldFormat();
-        ff.setName( "name" );
-        ff.setDescription( "Integer field" );
 
-        //assertEquals(, ff. );
-    }
     @Test
     public void hashCodeAndEqualsIntFieldFormat( ){
-        IntFieldFormat ff = new IntFieldFormat();
-        ff.setName( "name" );
-        ff.setDescription( "Integer field" );
-        //assertEquals( 1, ff.hashCode( ) );
-        assertEquals( true, ff.equals( ff ) );
+        IntFieldFormat ff1 = new IntFieldFormat();
+        ff1.setName( "name" );
+        ff1.setDescription( "Integer field" );
+        IntFieldFormat ff2 = new IntFieldFormat();
+        ff2.setName( "name" );
+        ff2.setDescription( "Integer field" );
+        assertEquals( true, ff1.equals( ff2 ) && ff2.equals( ff1 ) );
+        assertEquals( true, ff1.hashCode( ) == ff2.hashCode( ) );
     }
 }

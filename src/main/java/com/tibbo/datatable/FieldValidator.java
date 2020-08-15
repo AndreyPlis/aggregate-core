@@ -27,11 +27,7 @@ public class FieldValidator {
         return true;
     }
 
-    public static boolean regexpValidator( String value, String regular ) {
+    public static boolean regexpValidator( String regular, String value ) {
         return Pattern.matches( regular, value );
-    }
-
-    public static boolean regexpValidator( Integer value, String regular ) {
-        return Pattern.matches( regular, value.toString( ) );
     }
 }
