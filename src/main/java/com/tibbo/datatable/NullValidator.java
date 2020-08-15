@@ -2,10 +2,10 @@ package com.tibbo.datatable;
 
 import java.util.regex.Pattern;
 
-public class NullValidator implements FieldValidator {
+public class NullValidator<T> implements FieldValidator<T> {
 
     @Override
-    public boolean validate( FieldFormat value ) {
-        return value.getValue( ) == null;
+    public boolean validate( T value ) {
+        return value == null;
     }
 }

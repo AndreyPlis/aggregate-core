@@ -8,28 +8,22 @@ public class FieldValidatorTest {
     @Test
     public void limitValidatorIntFieldFormat( ){
         LimitsValidator lv = new LimitsValidator( 1, 4 );
-        IntFieldFormat iff = new IntFieldFormat( );
-        iff.setValue(16788);
-        iff.setName( "restDD" );
-        iff.setHidden( false );
-
-        assertEquals( false, lv.validate( iff ) );
+        assertEquals( false, lv.validate( 123456789 ) );
     }
 
     @Test
     public void regexpValidator( ){
         RegexpValidator rv = new RegexpValidator( "^(true)$" );
-        FieldFormat bff = FieldFormatFactory.createFieldFormat( FieldFormat.BOOLEAN_FIELD, "test", "boolean field" );
-        bff.setValue( true );
-        assertEquals( true, rv.validate( bff ) );
+        assertEquals( true, rv.validate( true ) );
+        assertEquals( false, rv.validate( false ) );
     }
 
     @Test
     public void nullValidator( ){
         NullValidator nv = new NullValidator( );
-        FieldFormat bff = FieldFormatFactory.createFieldFormat( FieldFormat.BOOLEAN_FIELD, "test", "boolean field" );
+        Boolean bff = null;
         assertEquals( true, nv.validate( bff ) );
-        bff.setValue( false );
+        bff = true;
         assertEquals( false, nv.validate( bff ) );
     }
 }

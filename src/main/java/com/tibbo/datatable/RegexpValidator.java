@@ -2,7 +2,7 @@ package com.tibbo.datatable;
 
 import java.util.regex.Pattern;
 
-public class RegexpValidator implements FieldValidator {
+public class RegexpValidator<T> implements FieldValidator<T> {
     private String regular;
 
     public void setRegular(String regular) {
@@ -14,7 +14,7 @@ public class RegexpValidator implements FieldValidator {
     }
 
     @Override
-    public boolean validate(FieldFormat value) {
-        return Pattern.matches( regular, value.getValue( ).toString( ) );
+    public boolean validate(T value) {
+        return Pattern.matches( regular, value.toString( ) );
     }
 }

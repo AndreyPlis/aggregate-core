@@ -7,7 +7,6 @@ public abstract class FieldFormat<T> implements Cloneable{
     private String description;
     private Boolean nullable = true;
     private Boolean hidden = false;
-    private T value;
     private T defaultValue;
 
     public static final char INTEGER_FIELD = 'I';
@@ -50,14 +49,6 @@ public abstract class FieldFormat<T> implements Cloneable{
 
     public void setNullable(Boolean nullable) {
         this.nullable = nullable;
-    }
-
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
     }
 
     public T getDefaultValue() {
