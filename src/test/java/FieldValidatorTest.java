@@ -4,37 +4,32 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 public class FieldValidatorTest {
-    @Test
-    public void limitValidatorIntFieldFormat( ){
-        IntFieldFormat iff = new IntFieldFormat( );
-        iff.setValue(16788);
-        iff.setName( "restDD" );
-        iff.setHidden( false );
-        assertEquals( false, FieldValidator.limitsValidator( iff, 1, 999 ) );
-    }
 
     @Test
-    public void limitValidatorStringFieldFormat( ){
+    public void limitValidatorIntFieldFormat( ){
+        LimitsValidator lv = new LimitsValidator( 1, 4 );
         IntFieldFormat iff = new IntFieldFormat( );
         iff.setValue(16788);
         iff.setName( "restDD" );
         iff.setHidden( false );
-        assertEquals( false, FieldValidator.limitsValidator( iff, 1, 999 ) );
+
+        assertEquals( false, lv.validate( iff ) );
     }
 
     @Test
     public void regexpValidator( ){
+        RegexpValidator rv = new RegexpValidator( "^(true)$" );
         FieldFormat bff = FieldFormatFactory.createFieldFormat( FieldFormat.BOOLEAN_FIELD, "test", "boolean field" );
-        assertEquals( true, FieldValidator.regexpValidator( "^(true)$", bff.valueToString( true ) ) );
-        assertEquals( false, FieldValidator.regexpValidator( "\\D*", "test1199" ) );
-       //assertEquals( true, FieldValidator.regexpValidator( "\\D*", "test" ) );
+        bff.setValue( true );
+        assertEquals( true, rv.validate( bff ) );
     }
 
     @Test
     public void nullValidator( ){
+        NullValidator nv = new NullValidator( );
         FieldFormat bff = FieldFormatFactory.createFieldFormat( FieldFormat.BOOLEAN_FIELD, "test", "boolean field" );
-        assertEquals( true, FieldValidator.nullValidator( ( Boolean ) bff.getValue( ) ) );
+        assertEquals( true, nv.validate( bff ) );
         bff.setValue( false );
-        assertEquals( false, FieldValidator.nullValidator( ( Boolean ) bff.getValue( ) ) );
+        assertEquals( false, nv.validate( bff ) );
     }
 }

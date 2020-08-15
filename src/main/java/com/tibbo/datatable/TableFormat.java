@@ -3,8 +3,9 @@ package com.tibbo.datatable;
 import java.util.*;
 
 public class TableFormat implements Cloneable {
-    private int min = 0;
-    private int max = 0;
+
+    private int minRowCount = 0;
+    private int maxRowCount = 0;
     private List<FieldFormat> fields = new ArrayList<>();
 
     public void addField(FieldFormat fieldFormat)
@@ -17,20 +18,20 @@ public class TableFormat implements Cloneable {
         return fields.remove(fieldFormat);
     }
 
-    public int getMin() {
-        return min;
+    public int getMinRowCount() {
+        return minRowCount;
     }
 
-    public void setMin(int min) {
-        this.min = min;
+    public void setMinRowCount(int minRowCount) {
+        this.minRowCount = minRowCount;
     }
 
-    public int getMax() {
-        return max;
+    public int getMaxRowCount() {
+        return maxRowCount;
     }
 
-    public void setMax(int max) {
-        this.max = max;
+    public void setMaxRowCount(int maxRowCount) {
+        this.maxRowCount = maxRowCount;
     }
 
     @Override
@@ -38,21 +39,21 @@ public class TableFormat implements Cloneable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TableFormat that = (TableFormat) o;
-        return min == that.min &&
-                max == that.max &&
+        return minRowCount == that.minRowCount &&
+                maxRowCount == that.maxRowCount &&
                 fields.equals(that.fields);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(min, max, fields);
+        return Objects.hash(minRowCount, maxRowCount, fields);
     }
 
     @Override
     public String toString() {
         return "TableFormat{" +
-                "min=" + min +
-                ", max=" + max +
+                "min=" + minRowCount +
+                ", max=" + maxRowCount +
                 ", fields=" + fields +
                 '}';
     }

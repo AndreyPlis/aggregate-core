@@ -8,7 +8,7 @@ public abstract class FieldFormat<T> implements Cloneable{
     private Boolean nullable = true;
     private Boolean hidden = false;
     private T value;
-    //private T defaultValue;
+    private T defaultValue;
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
@@ -60,6 +60,13 @@ public abstract class FieldFormat<T> implements Cloneable{
         this.value = value;
     }
 
+    public T getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(T defaultValue) {
+        this.defaultValue = defaultValue;
+    }
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();

@@ -8,16 +8,19 @@ public class FieldFormatFactory {
             case FieldFormat.STRING_FIELD:
             {
                 ff = new StringFieldFormat();
+                ff.setDefaultValue( "text" );
                 break;
             }
             case FieldFormat.INTEGER_FIELD:
             {
                 ff = new IntFieldFormat();
+                ff.setDefaultValue( 1 );
                 break;
             }
             case FieldFormat.BOOLEAN_FIELD:
             {
                 ff = new BooleanFieldFormat();
+                ff.setDefaultValue( true );
                 break;
             }
         }
