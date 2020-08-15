@@ -9,6 +9,7 @@ public abstract class FieldFormat<T> implements Cloneable{
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
+    public static final char BOOLEAN_FIELD = 'B';
 
     public abstract String valueToString(T value);
 
