@@ -1,11 +1,16 @@
 package com.tibbo.datatable;
 
+import com.sun.org.apache.xpath.internal.operations.Variable;
+
 import java.util.*;
 
 public abstract class FieldFormat<T> implements Cloneable{
     private String name;
     private String description;
     private Boolean nullable;
+    private Boolean hidden;
+    private String defaultValue;
+    private FieldValidator fieldValidator;
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';

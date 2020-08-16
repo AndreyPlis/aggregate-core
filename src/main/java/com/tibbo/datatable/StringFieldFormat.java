@@ -9,6 +9,11 @@ public class StringFieldFormat extends FieldFormat<String> {
     }
 
     @Override
+    public String valueFromString(String value) {
+        return null;
+    }
+
+    @Override
     public char getType() {
         return FieldFormat.STRING_FIELD;
     }
