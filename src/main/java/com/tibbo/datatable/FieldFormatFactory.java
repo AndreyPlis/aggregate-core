@@ -2,47 +2,11 @@ package com.tibbo.datatable;
 
 public class FieldFormatFactory {
 
-    public static FieldFormat<?> createFieldFormat(Character type, String name, String description, Boolean nullable, Boolean hidden, String defaultValue) {
+    @SafeVarargs
+    public static <T> FieldFormat<?> createFieldFormat(Character type, T... args) {
         FieldFormat<?> fieldFormat = funcToCreateFieldFormat(type);
-        fieldFormat.setName(name);
-        fieldFormat.setDescription(description);
-        fieldFormat.setNullable(nullable);
-        fieldFormat.setHidden(hidden);
-        fieldFormat.setDefaultValue(defaultValue);
+        setArguments(fieldFormat, args);
         return fieldFormat;
-    }
-    public static FieldFormat<?> createFieldFormat(Character type, String name, String description, Boolean nullable, Boolean hidden) {
-        FieldFormat<?> fieldFormat = funcToCreateFieldFormat(type);
-        fieldFormat.setName(name);
-        fieldFormat.setDescription(description);
-        fieldFormat.setNullable(nullable);
-        fieldFormat.setHidden(hidden);
-        return fieldFormat;
-    }
-
-    public static FieldFormat<?> createFieldFormat(Character type, String name, String description, Boolean nullable) {
-        FieldFormat<?> fieldFormat = funcToCreateFieldFormat(type);
-        fieldFormat.setName(name);
-        fieldFormat.setDescription(description);
-        fieldFormat.setNullable(nullable);
-        return fieldFormat;
-    }
-
-    public static FieldFormat<?> createFieldFormat(Character type, String name, String description) {
-        FieldFormat<?> fieldFormat = funcToCreateFieldFormat(type);
-        fieldFormat.setName(name);
-        fieldFormat.setDescription(description);
-        return fieldFormat;
-    }
-
-    public static FieldFormat<?> createFieldFormat(Character type, String name) {
-        FieldFormat<?> fieldFormat = funcToCreateFieldFormat(type);
-        fieldFormat.setName(name);
-        return fieldFormat;
-    }
-
-    public static FieldFormat<?> createFieldFormat(Character type) {
-        return funcToCreateFieldFormat(type);
     }
 
     private static FieldFormat<?> funcToCreateFieldFormat(Character type) {
@@ -54,5 +18,21 @@ public class FieldFormatFactory {
             default -> throw new IllegalArgumentException("Wrong FieldFormat type" + type);
         }
         return fieldFormat;
+    }
+
+    @SafeVarargs
+    private static <T> void setArguments(FieldFormat<?> fieldFormat, T... args) {
+        switch (args.length) {
+            case 5:
+                fieldFormat.setDefaultValue((String) args[4]);
+            case 4:
+                fieldFormat.setHidden((Boolean) (args[3]));
+            case 3:
+                fieldFormat.setNullable((Boolean) (args[2]));
+            case 2:
+                fieldFormat.setDescription((String) args[1]);
+            case 1:
+                fieldFormat.setName((String) args[0]);
+        }
     }
 }

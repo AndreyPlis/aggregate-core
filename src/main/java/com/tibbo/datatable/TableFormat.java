@@ -74,7 +74,7 @@ public class TableFormat implements Cloneable {
                 copy.fields.add(f.clone());
             }
         } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("Невозможно", e);
+            throw new IllegalStateException("Object cannot be cloned", e);
         }
         return copy;
     }
