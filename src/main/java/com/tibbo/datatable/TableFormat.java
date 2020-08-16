@@ -35,7 +35,6 @@ public class TableFormat implements Cloneable {
         }
         TableFormat tableFormat = (TableFormat)o;
         return fields.equals(tableFormat.fields);
-                //(fields == tableFormat.fields || (fields != null && fields.equals(tableFormat.fields)) );
     }
 
     @Override
