@@ -6,9 +6,12 @@ public abstract class FieldFormat<T> implements Cloneable{
     private String name;
     private String description;
     private Boolean nullable;
+    private Boolean hidden;
+    private String defaultValue;
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
+    public static final char BOOLEAN_FIELD = 'B';
 
     public abstract String valueToString(T value);
 
@@ -40,18 +43,57 @@ public abstract class FieldFormat<T> implements Cloneable{
         this.nullable = nullable;
     }
 
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    //update 1.1.2
     @Override
     public boolean equals(Object o) {
-        throw new UnsupportedOperationException();
+        if(this == o){
+             return true;
+        }
+        if (getClass() != o.getClass()){
+            return false;
+        }
+        if(o == null){
+            return false;
+        }
+        FieldFormat<?> fieldEquals = (FieldFormat<?>) o;
+        return Objects.equals(name, fieldEquals.name) && Objects.equals( description, fieldEquals.description) &&
+                Objects.equals(nullable, fieldEquals.nullable) && Objects.equals(hidden, fieldEquals.hidden) &&
+                Objects.equals(defaultValue, fieldEquals.defaultValue);
     }
 
     @Override
     public int hashCode() {
-        throw new UnsupportedOperationException();
+        return Objects.hash(name, description, nullable, hidden, defaultValue);
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException();
+        return "Name: " + name + "\n Description: " + description + "\n Nullable: " + nullable + "\n Hidden: " + hidden + "\n DefaultValue: " + defaultValue; //need upload from 1.6
+    }
+
+    @Override
+    public FieldFormat<?> clone(){
+        try{
+            return (FieldFormat<?>) super.clone();
+        } catch (CloneNotSupportedException error){
+            throw new Error("Cant be used", error);
+        }
+
     }
 }
