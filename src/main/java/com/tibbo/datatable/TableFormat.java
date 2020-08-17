@@ -7,6 +7,14 @@ public class TableFormat implements Cloneable {
     private int minRows = 0;
     private int maxRows = Integer.MAX_VALUE;
 
+    public TableFormat() {
+        this(1, 1);
+    }
+
+    public TableFormat(int minRows, int maxRows) {
+        this.minRows = minRows;
+        this.maxRows = maxRows;
+    }
 
     public void addField(FieldFormat fieldFormat)
     {
@@ -54,6 +62,11 @@ public class TableFormat implements Cloneable {
 
     @Override
     public TableFormat clone() throws CloneNotSupportedException{
-        return (TableFormat) super.clone();
+        TableFormat tableFormat = (TableFormat) super.clone();
+        tableFormat.fields = new ArrayList<>();
+        for(FieldFormat format:fields){
+            tableFormat.fields.add(format.clone());
+        }
+        return tableFormat;
     }
 }

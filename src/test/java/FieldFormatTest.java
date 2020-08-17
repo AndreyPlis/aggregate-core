@@ -13,7 +13,7 @@ public class FieldFormatTest {
 
     @Test
     public void createStringFieldFormatFromFactory() {
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "DescrOfStr1", "true", "false");
+        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "DescrOfStr1", true, false);
         assertEquals(FieldFormat.STRING_FIELD, ff.getType());
         assertEquals("str1", ff.getName());
         assertEquals("DescrOfStr1", ff.getDescription());
@@ -24,7 +24,7 @@ public class FieldFormatTest {
 
     @Test
     public void createIntFieldFormatFromFactory() {
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "DescrOfInt1", "no", "no", "1234");
+        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "DescrOfInt1", false, false, 1234);
         assertEquals(FieldFormat.INTEGER_FIELD, ff.getType());
         assertEquals("int1", ff.getName());
         assertEquals("DescrOfInt1", ff.getDescription());
