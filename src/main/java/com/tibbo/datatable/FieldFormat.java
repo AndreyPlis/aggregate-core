@@ -7,6 +7,8 @@ public abstract class FieldFormat<T> implements Cloneable{
     private String description;
     private Boolean nullable;
 
+    private List<FieldValidator> validators = new ArrayList<>();
+
     private Boolean hidden;
 
     private T defaultValue;
@@ -57,25 +59,42 @@ public abstract class FieldFormat<T> implements Cloneable{
         return defaultValue;
     }
 
+    public void addValidator(FieldValidator fieldValidator)
+    {
+        validators.add(fieldValidator);
+    }
+
     public void setDefaultValue(T defaultValue) {
         this.defaultValue = defaultValue;
     }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FieldFormat<?> that = (FieldFormat<?>) o;
-        return name.equals(that.name) &&
+        return Objects.equals(name, that.name) &&
                 Objects.equals(description, that.description) &&
-                nullable.equals(that.nullable) &&
-                hidden.equals(that.hidden) &&
+                Objects.equals(nullable, that.nullable) &&
+                Objects.equals(validators, that.validators) &&
+                Objects.equals(hidden, that.hidden) &&
                 Objects.equals(defaultValue, that.defaultValue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, nullable, hidden, defaultValue);
+        return Objects.hash(name, description, nullable, validators, hidden, defaultValue);
+    }
+
+    @Override
+    public FieldFormat clone()  {
+        try {
+            FieldFormat ff = (FieldFormat) super.clone();
+            return ff;
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("cannot clone",e);
+        }
     }
 
     @Override

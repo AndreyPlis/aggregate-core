@@ -22,7 +22,7 @@ public class FieldFormatFactory {
     }
 
     public static FieldFormat createFieldFormat(Character type, String name){
-        FieldFormat ff = null;
+        FieldFormat ff;
         if (type == FieldFormat.STRING_FIELD)
             ff = new StringFieldFormat();
         else if (type == FieldFormat.INTEGER_FIELD)
