@@ -2,8 +2,8 @@ package com.tibbo.datatable;
 
 public class NullFieldValidator<T> implements FieldValidator<T> {
     @Override
-    public void validate(T value) throws ValidateException {
+    public void validate(T value) throws ValidationException {
         if(value == null)
-            throw new ValidateException("value must not be null");
+            throw new ValidationException("value must not be null");
     }
 }

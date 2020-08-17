@@ -68,6 +68,16 @@ public abstract class FieldFormat<T> implements Cloneable{
         this.defaultValue = defaultValue;
     }
 
+    public void validate(T value) {
+        for (FieldValidator validator : validators) {
+            try {
+                validator.validate(value);
+            } catch (ValidationException e) {
+                throw new IllegalStateException(e);
+            }
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {

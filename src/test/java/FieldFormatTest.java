@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 public class FieldFormatTest {
 
+
     @Test
     public void createStringFieldFormat() {
         StringFieldFormat ff = new StringFieldFormat();
