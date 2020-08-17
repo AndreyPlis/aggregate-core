@@ -13,7 +13,6 @@ public class FieldFormatTest {
 
     @Test
     public void createStringFieldFormatFromFactory() {
-
     }
 
     @Test
