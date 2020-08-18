@@ -1,11 +1,12 @@
 package com.tibbo.datatable;
 
-public class NullFieldValidator extends FieldValidator{
+public class NullFieldValidator<T> implements FieldValidator<T>{
 
-    public boolean valid(FieldFormat ff) {
-        if(ff == null) {
-            return false;
+    @Override
+    public void validate(T value) throws ValidateException{
+        if(value == null) {
+            throw new ValidateException("null values not allowed");
         }
-        return true;
+
     }
 }

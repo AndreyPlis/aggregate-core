@@ -1,5 +1,5 @@
 package com.tibbo.datatable;
 
-public abstract class FieldValidator {
-    //public abstract boolean valid(FieldFormat ff);
+public interface FieldValidator<T> {
+    public void validate(T value) throws ValidateException;
 }

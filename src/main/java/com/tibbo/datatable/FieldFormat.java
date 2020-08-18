@@ -9,6 +9,8 @@ public abstract class FieldFormat<T> implements Cloneable{
     private Boolean hidden;
     private T defaultValue;
 
+    private List<FieldValidator> validators = new ArrayList<>();
+
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
     public static final char BOOLEAN_FIELD = 'B';
@@ -57,6 +59,12 @@ public abstract class FieldFormat<T> implements Cloneable{
 
     public void setDefaultValue(T defaultValue){
         this.defaultValue = defaultValue;
+    }
+
+    public void validate(T value) throws ValidateException{
+        for(FieldValidator validator:validators){
+            validator.validate(value);
+        }
     }
 
     @Override
