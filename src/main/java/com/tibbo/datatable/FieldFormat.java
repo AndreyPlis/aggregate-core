@@ -59,7 +59,7 @@ public abstract class FieldFormat<T> implements Cloneable{
         this.defaultValue = defaultValue;
     }
 
-    //update 1.1.2
+
     @Override
     public boolean equals(Object o) {
         if(this == o){
@@ -92,7 +92,7 @@ public abstract class FieldFormat<T> implements Cloneable{
         try{
             return (FieldFormat<?>) super.clone();
         } catch (CloneNotSupportedException error){
-            throw new Error("Cant be used", error);
+            throw new IllegalArgumentException("Cant be used", error);
         }
 
     }

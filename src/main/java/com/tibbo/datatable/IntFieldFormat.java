@@ -9,7 +9,7 @@ public class IntFieldFormat extends FieldFormat<Integer> {
 
     @Override
     public Integer valueFromString(String value) {
-        return Integer.parseInt(value); //added 1.2
+        return Integer.parseInt(value);
     }
 
     @Override
