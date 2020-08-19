@@ -13,6 +13,8 @@ public abstract class FieldFormat<T> implements Cloneable{
     public static final char STRING_FIELD = 'S';
     public static final char BOOLEAN_FIELD = 'B';
 
+    private List<FieldValidator> validators = new ArrayList<>();
+
     public abstract String valueToString(T value);
 
     public abstract T valueFromString(String value);
@@ -57,6 +59,20 @@ public abstract class FieldFormat<T> implements Cloneable{
 
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    public void addValidator(FieldValidator fieldValidator) {
+        validators.add(fieldValidator);
+    }
+
+    public void validate(T value) {
+        for (FieldValidator validator : validators) {
+            try {
+                validator.validate(value);
+            } catch (ValidationException e) {
+                throw new IllegalStateException(e);
+            }
+        }
     }
 
 
