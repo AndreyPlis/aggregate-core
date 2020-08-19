@@ -5,8 +5,8 @@ import java.util.*;
 public class TableFormat implements Cloneable {
     private List<FieldFormat> fields = new ArrayList<>();
 
-    private int minCountLine; //added 2.2
-    private int maxCountLine; //added 2.2
+    private int minCountLine;
+    private int maxCountLine;
 
     public int getMinCountLine() {
         return minCountLine;
@@ -33,34 +33,42 @@ public class TableFormat implements Cloneable {
     {
         return fields.remove(fieldFormat);
     }
-    //added 2.1
-    @Override
-    public boolean equals(Object o){
-        if(this == o){
-            return true;
+
+    public TableFormat(int min, int max){
+        if(min > max){
+            throw new IllegalArgumentException("MinCountLine cannot be greater than the MaxCountLine");
         }
-        if(o == null){
-            return  false;
-        }
-        if( getClass() !=o.getClass()){
-            return false;
-        }
-        TableFormat tableEquals = (TableFormat) o;
-        return false; // need update after create min & max string
+        setMinCountLine(min);
+        setMaxCountLine(max);
     }
-    //added 2.1
-    @Override
-    public int hashCode(){
-        return Objects.hash();// need update after create min & max string
-    }
-    //added 2.1
-    @Override
-    public String toString(){
-        return "Hello"; // need update after create min & max string
-    }
-    //added 2.1
+
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TableFormat that = (TableFormat) o;
+        return minCountLine == that.minCountLine &&
+                maxCountLine == that.maxCountLine &&
+                Objects.equals(fields, that.fields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fields, minCountLine, maxCountLine);
+    }
+
+    @Override
+    public String toString() {
+        return "TableFormat{" +
+                "fields=" + fields +
+                ", minCountLine=" + minCountLine +
+                ", maxCountLine=" + maxCountLine +
+                '}';
+    }
+
 }
