@@ -20,6 +20,7 @@ public class FieldFormatTest {
         assertTrue(ff.getNullable());
         assertFalse(ff.getHidden());
         assertNull(ff.getDefaultValue());
+        //System.out.println("class of ff: " + ff.getClass().toString());
     }
 
     @Test

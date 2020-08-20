@@ -4,32 +4,78 @@ import java.util.*;
 
 public class TableFormat implements Cloneable {
     private List<FieldFormat> fields = new ArrayList<>();
-    private int minRows = 0;
-    private int maxRows = Integer.MAX_VALUE;
+    private int minRecords = 0;
+    private int maxRecords = Integer.MAX_VALUE;
 
     public TableFormat() {
         this(1, 1);
     }
 
-    public TableFormat(int minRows, int maxRows) {
-        this.minRows = minRows;
-        this.maxRows = maxRows;
+    public TableFormat(int minRecords, int maxRecords) {
+        this.minRecords = minRecords;
+        this.maxRecords = maxRecords;
     }
 
-    public void addField(FieldFormat fieldFormat)
+    public int getMinRecords() {
+        return minRecords;
+    }
+
+    public void setMinRecords(int minRecords) {
+        this.minRecords = minRecords;
+    }
+
+    public int getMaxRecords() {
+        return maxRecords;
+    }
+
+    public void setMaxRecords(int maxRecords) {
+        this.maxRecords = maxRecords;
+    }
+
+    public boolean addField(FieldFormat fieldFormat)
     {
-        if(fields.size() < maxRows) {
-            fields.add(fieldFormat);
+        if(fields != null) {
+            return fields.add(fieldFormat);
         }
+        return false;
     }
 
     public boolean removeField(FieldFormat fieldFormat)
     {
-        if( fields.size() > minRows) {
+        if( fields != null) {
             return fields.remove(fieldFormat);
         }
-        else {
-            return false;
+        return false;
+    }
+
+    public int getFieldsSize(){
+        return fields.size();
+    }
+
+    public char getFieldType(int index){
+        if(fields == null || index < 0 || index > fields.size()){
+            throw new IllegalStateException("wrong index in getFieldType: " + index);
+        }
+        else{
+            return fields.get(index).getType();
+        }
+    }
+
+    public String getFieldName(int index){
+        if(fields == null || index < 0 || index > fields.size()){
+            throw new IllegalStateException("wrong index in getFieldName: " + index);
+        }
+        else{
+            return fields.get(index).getName();
+        }
+    }
+
+    public <T> T getFieldDefaultValue(int index){
+        if(fields == null || index < 0 || index > fields.size()){
+            throw new IllegalStateException("wrong index in getFieldName: " + index);
+        }
+        else{
+            return (T) fields.get(index).getDefaultValue();
         }
     }
 
