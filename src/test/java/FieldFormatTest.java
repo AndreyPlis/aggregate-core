@@ -111,7 +111,7 @@ public class FieldFormatTest {
         FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "DescrOfStr1");
         FieldFormat f2 = ff;
         assertTrue( f2.equals(ff));
-        assertEquals(-270744153, ff.hashCode());
+        assertEquals(209519866, ff.hashCode());
         assertEquals(ff.hashCode(), f2.hashCode());
     }
 
@@ -120,7 +120,7 @@ public class FieldFormatTest {
         FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "DescrOfInt1");
         FieldFormat f2 = ff;
         assertTrue( f2.equals(ff));
-        assertEquals(-571929241, ff.hashCode());
+        assertEquals(-208755398, ff.hashCode());
         assertEquals(ff.hashCode(), f2.hashCode());
     }
 
@@ -129,7 +129,7 @@ public class FieldFormatTest {
         FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.BOOLEAN_FIELD, "bool1", "DescrOfBool1");
         FieldFormat f2 = ff;
         assertTrue( f2.equals(ff));
-        assertEquals(1652822839, ff.hashCode());
+        assertEquals(1740115306, ff.hashCode());
         assertEquals(ff.hashCode(), f2.hashCode());
     }
 

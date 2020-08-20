@@ -34,4 +34,9 @@ public class LimitsFieldValidator<T extends Comparable<T>> implements FieldValid
        }
        
     }
+
+    @Override
+    public LimitsFieldValidator<T> clone() throws CloneNotSupportedException{
+        return (LimitsFieldValidator<T>) super.clone();
+    }
 }

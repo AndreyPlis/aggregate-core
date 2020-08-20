@@ -9,4 +9,9 @@ public class NullFieldValidator<T> implements FieldValidator<T>{
         }
 
     }
+
+    @Override
+    public NullFieldValidator<T> clone() throws CloneNotSupportedException{
+        return (NullFieldValidator<T>) super.clone();
+    }
 }

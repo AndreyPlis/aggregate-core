@@ -23,4 +23,9 @@ public class RegexFieldValidator<T> implements FieldValidator<T>{
         if(value == null || !value.toString().matches(regex) )
             throw new ValidateException("Doesn't match regular expression");
     }
+
+    @Override
+    public RegexFieldValidator<T> clone() throws CloneNotSupportedException{
+        return (RegexFieldValidator<T>) super.clone();
+    }
 }

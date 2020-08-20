@@ -61,6 +61,20 @@ public abstract class FieldFormat<T> implements Cloneable{
         this.defaultValue = defaultValue;
     }
 
+    public boolean addValidator(FieldValidator validator){
+        if(validators != null){
+            return validators.add(validator);
+        }
+        return false;
+    }
+
+    public boolean removeValidator(FieldValidator validator){
+        if(validators != null){
+            return validators.remove(validator);
+        }
+        return false;
+    }
+
     public void validate(T value) throws ValidateException{
         for(FieldValidator validator:validators){
             validator.validate(value);
@@ -85,7 +99,9 @@ public abstract class FieldFormat<T> implements Cloneable{
                 ||
                 (hidden == fieldFormat.hidden || (hidden != null && hidden.equals(fieldFormat.getHidden())) )
                 ||
-                (defaultValue == fieldFormat.defaultValue || (defaultValue != null && defaultValue.equals(fieldFormat.getDefaultValue())) );
+                (defaultValue == fieldFormat.defaultValue || (defaultValue != null && defaultValue.equals(fieldFormat.getDefaultValue())) )
+                ||
+                (validators == fieldFormat.validators || (validators != null && validators.equals(fieldFormat.validators)) );
     }
 
     @Override
@@ -98,6 +114,7 @@ public abstract class FieldFormat<T> implements Cloneable{
         result = prime * result + (nullable == null ? 0 : nullable.hashCode());
         result = prime * result + (hidden == null ? 0 : hidden.hashCode());
         result = prime * result + (defaultValue == null ? 0 : defaultValue.hashCode());
+        result = prime * result + (validators == null ? 0 : validators.hashCode());
         return result;
     }
 
@@ -109,12 +126,18 @@ public abstract class FieldFormat<T> implements Cloneable{
         result += "description: " + (description == null ? "null" : description) + "; ";
         result += "nullable: " + (nullable == null ? "null" : nullable.toString()) + ";";
         result += "hidden: " + (hidden == null ? "null" : hidden.toString()) + ";";
-        result += "default value: " + (defaultValue == null ? "null" : defaultValue.toString()) + ".";
+        result += "default value: " + (defaultValue == null ? "null" : defaultValue.toString()) + ";";
+        result += "validators: " + (validators == null ? "null" : validators.toString()) + ":";
         return result;
     }
 
     @Override
     public FieldFormat<T> clone() throws CloneNotSupportedException{
-        return (FieldFormat<T>) super.clone();
+        FieldFormat<T> fieldFormat = (FieldFormat<T>) super.clone();
+        fieldFormat.validators = new ArrayList<>();
+        for(FieldValidator validator:validators){
+            fieldFormat.validators.add(validator.clone());
+        }
+        return fieldFormat;
     }
 }
