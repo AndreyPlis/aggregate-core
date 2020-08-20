@@ -9,7 +9,7 @@ public class IntFieldFormat extends FieldFormat<Integer> {
 
     @Override
     public Integer valueFromString(String value) {
-        return null;
+         return Integer.valueOf(value);
     }
 
     @Override
