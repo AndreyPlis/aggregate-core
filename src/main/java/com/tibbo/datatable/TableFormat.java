@@ -8,6 +8,10 @@ public class TableFormat implements Cloneable {
 
     private List<FieldFormat<?>> fields = new ArrayList<>();
 
+    public TableFormat() {
+        this(1, 1);
+    }
+
     public TableFormat(int min, int max) {
         if (min > max) {
             throw new IllegalArgumentException("minCountField must be greater than maxCountField");
@@ -38,6 +42,14 @@ public class TableFormat implements Cloneable {
 
     public boolean removeField(FieldFormat<?> fieldFormat) {
         return fields.remove(fieldFormat);
+    }
+
+    protected FieldFormat<?> getFields(int value) {
+        return fields.get(value);
+    }
+
+    protected int getSizeFieldsList() {
+        return fields.size();
     }
 
     @Override
@@ -78,4 +90,5 @@ public class TableFormat implements Cloneable {
         }
         return copy;
     }
+
 }

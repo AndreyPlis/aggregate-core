@@ -8,8 +8,8 @@ public class LengthFieldValidator<T> extends FieldValidator<T> {
     }
 
     @Override
-    public void isValid(T value) {
-        if (value.toString().length() < lengthField)
+    public void validate(T value) {
+        if (value.toString().length() > lengthField)
             throw new IllegalArgumentException(String.format("The field must not exceed %d characters",lengthField));
     }
 }

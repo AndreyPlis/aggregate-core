@@ -11,7 +11,7 @@ public class RegexValidator<T> extends FieldValidator<T> {
     }
 
     @Override
-    public void isValid(T value) {
+    public void validate(T value) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher((String) value);
         if (!matcher.find())

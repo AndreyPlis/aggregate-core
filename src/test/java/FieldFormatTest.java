@@ -18,9 +18,9 @@ public class FieldFormatTest {
 
     @Test
     public void createFieldFormatFromFactory() {
-        FieldFormat<?> fieldFormat = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "First", "0", true, false, "Second");
-        FieldFormat<?> fieldFormat1 = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "First", "0", true, false, "Second");
-        FieldFormat<?> fieldFormat2 = FieldFormatFactory.createFieldFormat(FieldFormat.BOOLEAN_FIELD, "First", "0", true, false, "Second");
+        FieldFormat<?> fieldFormat = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "First", "0", true, false);
+        FieldFormat<?> fieldFormat1 = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "First", "0", true, false);
+        FieldFormat<?> fieldFormat2 = FieldFormatFactory.createFieldFormat(FieldFormat.BOOLEAN_FIELD, "First", "0", true, false);
 
         assertEquals(FieldFormat.STRING_FIELD, fieldFormat.getType());
         assertEquals(FieldFormat.INTEGER_FIELD, fieldFormat1.getType());
@@ -69,8 +69,8 @@ public class FieldFormatTest {
 
     @Test
     public void checkEqualsMethod() {
-        FieldFormat<?> stringFieldFormat1 = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "First", "0", true, false, "Second");
-        FieldFormat<?> stringFieldFormat2 = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "First", "0", true, false, "Second");
+        FieldFormat<?> stringFieldFormat1 = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "First", "0", true, false);
+        FieldFormat<?> stringFieldFormat2 = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "First", "0", true, false);
 
         assertEquals(stringFieldFormat2, stringFieldFormat1);
         stringFieldFormat2.setName("Second");

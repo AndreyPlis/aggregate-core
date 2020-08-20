@@ -10,7 +10,7 @@ public class LimitsValidator<T> extends FieldValidator<T> {
     }
 
     @Override
-    public void isValid(T value) {
+    public void validate(T value) {
         if ((Integer) value <= startValueLimits || (Integer) value >= endValueLimits) {
             throw new IllegalArgumentException(String.format("Value must be between %d and %d", startValueLimits, endValueLimits));
         }
