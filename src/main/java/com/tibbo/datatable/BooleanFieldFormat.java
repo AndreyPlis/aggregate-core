@@ -3,16 +3,15 @@ package com.tibbo.datatable;
 public class BooleanFieldFormat extends FieldFormat<Boolean>{
     @Override
     public String valueToString(Boolean value) {
-        return null;
+      return value.toString();
     }
 
     @Override
-    public Boolean valueFromString(String value) {
-        return null;
+    public Boolean valueFromString(String value) {     //а это вообще правильно? зачем тут этот метод если и должен быть то должен быть void и сетить значение из строки????
+
+        return Boolean.valueOf(value);
     }
 
     @Override
-    public char getType() {
-        return 0;
-    }
+    public char getType () { return FieldFormat.BOOLEAN_FIELD; }
 }
