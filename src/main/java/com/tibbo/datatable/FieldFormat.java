@@ -1,30 +1,32 @@
 package com.tibbo.datatable;
 
-import com.sun.org.apache.xpath.internal.operations.Variable;
-
 import java.util.*;
 
-public abstract class FieldFormat<T> implements Cloneable{
+public abstract class FieldFormat<T> implements Cloneable {
     private String name;
     private String description;
+
     private Boolean nullable;
     private Boolean hidden;
-    private String defaultValue;
-    private FieldValidator fieldValidator;
+
+    private T defaultValue;
+
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
+    public static final char BOOLEAN_FIELD = 'B';
+
 
     public abstract String valueToString(T value);
 
     public abstract T valueFromString(String value);
 
+    public abstract char getType();
+
+
     public String getName() {
         return name;
     }
-
-    public abstract char getType();
-
     public void setName(String name) {
         this.name = name;
     }
@@ -32,7 +34,6 @@ public abstract class FieldFormat<T> implements Cloneable{
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -40,23 +41,49 @@ public abstract class FieldFormat<T> implements Cloneable{
     public Boolean getNullable() {
         return nullable;
     }
-
     public void setNullable(Boolean nullable) {
         this.nullable = nullable;
     }
 
+    public Boolean getHidden() { return hidden; }
+    public void setHidden(Boolean hidden) { this.hidden = hidden; }
+
+    public T getDefaultValue() { return defaultValue; }
+    public void setDefaultValue(T defaultValue) { this.defaultValue = defaultValue; }
+
+
+
     @Override
-    public boolean equals(Object o) {
-        throw new UnsupportedOperationException();
+    protected Object clone() throws CloneNotSupportedException {
+         return super.clone();
+
     }
 
     @Override
     public int hashCode() {
-        throw new UnsupportedOperationException();
+        return Objects.hash(getName(), getDescription(), getNullable(), getHidden(), getDefaultValue());
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException();
+        return "FieldFormat{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", nullable=" + nullable +
+                ", hidden=" + hidden +
+                ", defaultValue=" + defaultValue +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FieldFormat)) return false;
+        FieldFormat<?> that = (FieldFormat<?>) o;
+        return Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getDescription(), that.getDescription()) &&
+                Objects.equals(getNullable(), that.getNullable()) &&
+                Objects.equals(getHidden(), that.getHidden()) &&
+                Objects.equals(getDefaultValue(), that.getDefaultValue());
     }
 }

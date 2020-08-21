@@ -7,7 +7,7 @@ public class BooleanFieldFormat extends FieldFormat<Boolean>{
     }
 
     @Override
-    public Boolean valueFromString(String value) {     //а это вообще правильно? зачем тут этот метод если и должен быть то должен быть void и сетить значение из строки????
+    public Boolean valueFromString(String value) {
 
         return Boolean.valueOf(value);
     }
