@@ -7,6 +7,10 @@ public class TableFormat implements Cloneable {
     private int maxRecords;
     private List<FieldFormat> fields = new ArrayList<>();
 
+    public static final String FORMAT_OPEN = "<";
+    public static final String FORMAT_CLOSE = ">";
+
+
 
     public void addField(FieldFormat fieldFormat)
     {
@@ -42,6 +46,11 @@ public class TableFormat implements Cloneable {
         this.fields = fields;
     }
 
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,7 +62,17 @@ public class TableFormat implements Cloneable {
     }
 
     @Override
-    public int hashCode() {//Надо прочитать теорию
+    public int hashCode() {
         return Objects.hash(getMinRecords(), getMaxRecords(), getFields());
+    }
+
+
+    @Override
+    public String toString() {
+        return "TableFormat{" +
+                "minRecords=" + minRecords +
+                ", maxRecords=" + maxRecords +
+                ", fields=" + fields +
+                '}';
     }
 }
