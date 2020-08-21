@@ -4,14 +4,22 @@ public class FieldFormatBuilder {
 
     private FieldFormat newFieldFormat = null;
 
-    public FieldFormatBuilder(Character type) {
-        if (type == FieldFormat.STRING_FIELD)
-            newFieldFormat = new StringFieldFormat();
-        else if (type == FieldFormat.INTEGER_FIELD)
-            newFieldFormat = new IntFieldFormat();
-        else if (type == FieldFormat.BOOLEAN_FIELD)
-            newFieldFormat = new BooleanFieldFormat();
+
+
+    public FieldFormatBuilder() {
     }
+
+    public FieldFormatBuilder withType(Character type)
+    {
+        if ( type == FieldFormat.STRING_FIELD)
+            newFieldFormat = new StringFieldFormat();
+        else if ( type == FieldFormat.INTEGER_FIELD)
+            newFieldFormat = new IntFieldFormat();
+        else if ( type == FieldFormat.BOOLEAN_FIELD)
+            newFieldFormat = new BooleanFieldFormat();
+        return this;
+    }
+
 
     public FieldFormatBuilder withName(String name){
         newFieldFormat.setName(name);

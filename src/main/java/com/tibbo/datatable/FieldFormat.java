@@ -11,6 +11,10 @@ public abstract class FieldFormat<T> implements Cloneable {
 
     private T defaultValue;
 
+    private List<FieldValidator> validators;
+
+
+
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
@@ -29,6 +33,7 @@ public abstract class FieldFormat<T> implements Cloneable {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -36,6 +41,7 @@ public abstract class FieldFormat<T> implements Cloneable {
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -43,15 +49,26 @@ public abstract class FieldFormat<T> implements Cloneable {
     public Boolean getNullable() {
         return nullable;
     }
+
     public void setNullable(Boolean nullable) {
         this.nullable = nullable;
     }
 
-    public Boolean getHidden() { return hidden; }
-    public void setHidden(Boolean hidden) { this.hidden = hidden; }
+    public Boolean getHidden() {
+        return hidden;
+    }
 
-    public T getDefaultValue() { return defaultValue; }
-    public void setDefaultValue(T defaultValue) { this.defaultValue = defaultValue; }
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public T getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(T defaultValue) {
+        this.defaultValue = defaultValue;
+    }
 
 
 
