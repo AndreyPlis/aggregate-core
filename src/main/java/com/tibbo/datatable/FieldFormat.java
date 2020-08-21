@@ -17,6 +17,8 @@ public abstract class FieldFormat<T> implements Cloneable {
     public static final char BOOLEAN_FIELD = 'B';
 
 
+
+
     public abstract String valueToString(T value);
 
     public abstract T valueFromString(String value);
