@@ -44,4 +44,26 @@ public class DataRecord implements Cloneable{
             values.set(fieldIndex, value);
         }
     }
+
+    public Object getFieldValue(String fieldName){
+        int index = 0;
+        while(index < tableFormat.getFieldsSize() && !fieldName.equals(tableFormat.getFieldName(index))){
+            index++;
+        }
+        if( index < tableFormat.getFieldsSize() && fieldName.equals(tableFormat.getFieldName(index)) ){
+            return values.get(index);
+        }
+        else{
+            throw new IllegalStateException("field with name '"+ fieldName + "' wasn't found in getValue");
+        }
+    }
+
+    public Object getValue(int fieldIndex){
+        if(values == null || fieldIndex < 0 || fieldIndex > values.size()){
+            throw new IllegalStateException("wrong fieldIndex in getValue: " + fieldIndex);
+        }
+        else  {
+            return values.get(fieldIndex);
+        }
+    }
 }
