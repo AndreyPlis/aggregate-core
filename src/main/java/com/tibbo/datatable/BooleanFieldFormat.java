@@ -9,7 +9,7 @@ public class BooleanFieldFormat extends FieldFormat<Boolean> {
 
     @Override
     public Boolean valueFromString(String value) {
-        return Boolean.getBoolean(value);
+        return Boolean.valueOf(value);
     }
 
     @Override

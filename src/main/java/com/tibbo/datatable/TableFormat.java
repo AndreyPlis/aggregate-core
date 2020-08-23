@@ -44,7 +44,7 @@ public class TableFormat implements Cloneable {
         return fields.remove(fieldFormat);
     }
 
-    protected FieldFormat<?> getFields(int value) {
+    protected FieldFormat<?> getField(int value) {
         return fields.get(value);
     }
 

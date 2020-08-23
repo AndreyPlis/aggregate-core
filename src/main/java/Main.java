@@ -23,12 +23,15 @@ public class Main {
         fieldFormat2.addValidator(nullFieldValidator);
         fieldFormat2.addValidator(lengthFieldValidator);
 
-        DataRecord dataRecord = new DataRecord();
-        dataRecord.addDataToList(tableFormat,0,"1");
-        dataRecord.addDataToList(tableFormat,1,"Dmitrii");
+        DataRecord dataRecord = new DataRecord(tableFormat);
+        dataRecord.addValue(0,1);
+        dataRecord.addValue(1,"Dmitrii");
+        dataRecord.addValue(2,"Demichev");
+        dataRecord.addValue(3,true);
 
         System.out.println(dataRecord);
-        dataRecord.changeDataList(tableFormat,1,"Alex");
+        System.out.println(dataRecord.getValue(1));
+        dataRecord.setValue(1,"Alex");
         System.out.println(dataRecord);
 
 

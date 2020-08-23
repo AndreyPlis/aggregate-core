@@ -5,18 +5,26 @@ import java.util.List;
 import java.util.Objects;
 
 public class DataRecord {
+    private final TableFormat tableFormat;
 
-    private List dataList = new ArrayList<>();
+    private final List<Object> dataList = new ArrayList<>();
 
-
-    public void addDataToList(TableFormat tableFormat, int index, String value) {
-        tableFormat.getFields(index).validate(value);
-        dataList.add(tableFormat.getFields(index).valueFromString(value));
+    public DataRecord(TableFormat tableFormat) {
+        this.tableFormat = tableFormat;
     }
 
-    public void changeDataList(TableFormat tableFormat, int index, String value) {
-        tableFormat.getFields(index).validate(value);
-        dataList.set(index, tableFormat.getFields(index).valueFromString(value));
+    public void setValue(int index, Object value) {
+        tableFormat.getField(index).validate(String.valueOf(value));
+        dataList.set(index, value);
+    }
+
+    public void addValue(int index, Object value){
+        tableFormat.getField(index).validate(String.valueOf(value));
+        dataList.add(index, value);
+    }
+
+    public Object getValue(int index) {
+        return dataList.get(index);
     }
 
     @Override

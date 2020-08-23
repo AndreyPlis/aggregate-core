@@ -15,7 +15,7 @@ public class IntFieldFormat extends FieldFormat<Integer> {
 
     @Override
     public Integer valueFromString(String value) {
-        return Integer.parseInt(value);
+        return Integer.valueOf(value);
     }
 
 }

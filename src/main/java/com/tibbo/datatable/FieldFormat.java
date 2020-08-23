@@ -12,7 +12,7 @@ public abstract class FieldFormat<T> implements Cloneable {
     private Boolean hidden;
     private T defaultValue;
 
-    private List<FieldValidator> validators = new ArrayList<>();
+    private List<FieldValidator<?>> validators = new ArrayList<>();
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
@@ -65,11 +65,11 @@ public abstract class FieldFormat<T> implements Cloneable {
         this.defaultValue = defaultValue;
     }
 
-    public void addValidator(FieldValidator fieldValidator) {
+    public void addValidator(FieldValidator<?> fieldValidator) {
         validators.add(fieldValidator);
     }
 
-    public void removeValidator(FieldValidator fieldValidator) {
+    public void removeValidator(FieldValidator<?> fieldValidator) {
         validators.remove(fieldValidator);
     }
 
