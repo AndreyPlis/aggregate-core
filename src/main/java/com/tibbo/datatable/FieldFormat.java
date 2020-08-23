@@ -4,12 +4,13 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public abstract class FieldFormat<T> implements Cloneable{
+
     private String name;
     private String description;
     private Boolean nullable = true;
     private Boolean hidden = false;
     private T defaultValue;
-    private List<FieldValidator> fieldValidators = new ArrayList<FieldValidator>();
+    private List<FieldValidator> fieldValidators = new ArrayList<>();
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';

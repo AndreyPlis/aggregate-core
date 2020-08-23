@@ -1,6 +1,12 @@
 package com.tibbo.datatable;
 
 public class StringFieldFormat extends FieldFormat<String> {
+
+    @Override
+    public void setDefaultValue(String defaultValue) {
+        super.setDefaultValue(defaultValue);
+    }
+
     @Override
     public String valueToString(String value) {
         return value;
