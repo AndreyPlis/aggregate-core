@@ -1,6 +1,6 @@
 package com.tibbo.datatable;
 
-public class LimitsValidator<T> implements FieldValidator<T> {
+public class LimitsValidator<T> extends FieldValidator<T> {
     private final int startValueLimits;
     private final int endValueLimits;
 
