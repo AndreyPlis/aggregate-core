@@ -3,13 +3,9 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
-public class FieldFormatTest {
+import java.lang.annotation.*;
 
-    @Test
-    public void createStringFieldFormat() {
-        StringFieldFormat ff = new StringFieldFormat();
-        assertEquals(FieldFormat.STRING_FIELD,ff.getType());
-    }
+public class FieldFormatTest {
 
     @Test
     public void createStringFieldFormatFromFactory() {
@@ -33,104 +29,45 @@ public class FieldFormatTest {
         assertEquals(1234, ff.getDefaultValue());
     }
 
-    //Boolean
     @Test
-    public void createBooleanFieldFormat() {
-        BooleanFieldFormat ff = new BooleanFieldFormat();
-        assertEquals(FieldFormat.BOOLEAN_FIELD,ff.getType());
-    }
-
-    @Test
-    public void createBooleanFieldFormatFromFactory() {
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.BOOLEAN_FIELD, "bool1", "DescrOfBool1");
-        assertEquals(FieldFormat.BOOLEAN_FIELD, ff.getType());
-        assertEquals("bool1", ff.getName());
-        assertEquals("DescrOfBool1", ff.getDescription());
-    }
-
-    // convert to and from string
-    @Test
-    public void convertStringToFrom(){
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "DescrOfStr1");
-        assertEquals("TestValue", ff.valueToString("TestValue"));
-        assertEquals("SecondTest", ff.valueFromString("SecondTest"));
-    }
-
-    @Test
-    public void convertIntegerToFrom(){
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "DescrOfInt1");
-        assertEquals("1234", ff.valueToString(new Integer(1234)));
-        assertEquals(new Integer(7890), ff.valueFromString("7890"));
-    }
-
-    @Test
-    public void convertBooleanToFrom(){
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.BOOLEAN_FIELD, "bool1", "DescrOfBool1");
-        assertEquals("false", ff.valueToString(new Boolean("test")));
-        assertEquals("true", ff.valueToString(new Boolean("true")));
-        assertEquals(false, ff.valueFromString("7890"));
-    }
-
-    //clone
-    @Test
-    public void cloneString(){
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "DescrOfStr1");
+    public void validateField(){
+        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "Descr Of str1", false, false, "Hi all!");
+        ff.addValidator(new RegexFieldValidator("[a-z]+"));
         try {
-            FieldFormat f3 = ff.clone();
-            assertTrue( f3.equals(ff));
-        }catch (CloneNotSupportedException cloneEx) {
-            cloneEx.printStackTrace();
+            ff.validate("testvalue");
+        }
+        catch (ValidateException e){
+            System.out.println("First regex validation failed");
+        }
+        try {
+            ff.validate("123 456");
+        }
+        catch (ValidateException e){
+            System.out.println("Second regex validation failed");
         }
     }
-
     @Test
-    public void cloneInteger(){
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "DescrOfInt1");
-        try {
-            FieldFormat f3 = ff.clone();
-            assertTrue( f3.equals(ff));
-        }catch (CloneNotSupportedException cloneEx) {
-            cloneEx.printStackTrace();
-        }
+    public void createTableFormat(){
+        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "Descr Of str1", false, false, "hi all!");
+        ff.addValidator(new RegexFieldValidator("[a-z]+"));
+        TableFormat tf = new TableFormat();
+        tf.addField(ff);
+        assertEquals(1, tf.getFieldsSize());
+        assertFalse(tf.isFieldNullable(0));
+        tf.addField(FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "", true, false, 56));
+        assertEquals(2, tf.getFieldsSize());
+        assertEquals(FieldFormat.INTEGER_FIELD, tf.getFieldType(1));
     }
 
     @Test
-    public void cloneBoolean(){
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.BOOLEAN_FIELD, "bool1", "DescrOfBool1");
-        try {
-            FieldFormat f3 = ff.clone();
-            assertTrue( f3.equals(ff));
-        }catch (CloneNotSupportedException cloneEx) {
-            cloneEx.printStackTrace();
-        }
+    public void createDataRecord(){
+        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "Descr Of str1", false, false, "hi all!");
+        TableFormat tf = new TableFormat();
+        tf.addField(ff);
+        tf.addField(FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "", true, false, 56));
+        DataRecord dr = new DataRecord(tf);
+        assertEquals("hi all!", dr.getFieldValue(0));
+        dr.setFieldValue(0, "Next string");
+        assertEquals("Next string", dr.getFieldValue(0));
     }
-
-    //hashcode equals
-    @Test
-    public void equalsHashCodeString(){
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "DescrOfStr1");
-        FieldFormat f2 = ff;
-        assertTrue( f2.equals(ff));
-        assertEquals(209519866, ff.hashCode());
-        assertEquals(ff.hashCode(), f2.hashCode());
-    }
-
-    @Test
-    public void equalsHashCodeInteger(){
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "DescrOfInt1");
-        FieldFormat f2 = ff;
-        assertTrue( f2.equals(ff));
-        assertEquals(-208755398, ff.hashCode());
-        assertEquals(ff.hashCode(), f2.hashCode());
-    }
-
-    @Test
-    public void equalsHashCodeBoolean(){
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.BOOLEAN_FIELD, "bool1", "DescrOfBool1");
-        FieldFormat f2 = ff;
-        assertTrue( f2.equals(ff));
-        assertEquals(1740115306, ff.hashCode());
-        assertEquals(ff.hashCode(), f2.hashCode());
-    }
-
 }

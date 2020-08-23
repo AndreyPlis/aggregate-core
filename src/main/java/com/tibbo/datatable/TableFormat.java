@@ -54,7 +54,7 @@ public class TableFormat implements Cloneable {
 
     public char getFieldType(int index){
         if(fields == null || index < 0 || index > fields.size()){
-            throw new IllegalStateException("wrong index in getFieldType: " + index);
+            throw new IllegalStateException("wrong index in getFieldType(): " + index);
         }
         else{
             return fields.get(index).getType();
@@ -63,7 +63,7 @@ public class TableFormat implements Cloneable {
 
     public String getFieldName(int index){
         if(fields == null || index < 0 || index > fields.size()){
-            throw new IllegalStateException("wrong index in getFieldName: " + index);
+            throw new IllegalStateException("wrong index in getFieldName(): " + index);
         }
         else{
             return fields.get(index).getName();
@@ -72,12 +72,36 @@ public class TableFormat implements Cloneable {
 
     public <T> T getFieldDefaultValue(int index){
         if(fields == null || index < 0 || index > fields.size()){
-            throw new IllegalStateException("wrong index in getFieldName: " + index);
+            throw new IllegalStateException("wrong index in getFieldName(): " + index);
         }
         else{
             return (T) fields.get(index).getDefaultValue();
         }
     }
+
+    public boolean isFieldNullable(int index){
+        if(fields == null || index < 0 || index > fields.size()){
+            throw new IllegalStateException("wrong index in isFieldNullable(): " + index);
+        }
+        else{
+            return fields.get(index).getNullable().booleanValue();
+        }
+    }
+
+    public <T> void validateField(int index, T value){
+        if(fields == null || index < 0 || index > fields.size()){
+            throw new IllegalStateException("wrong index in validateField(): " + index);
+        }
+        else{
+            try{
+                fields.get(index).validate(value);
+            }
+            catch (ValidateException e){
+                throw new IllegalStateException("validation fail in validateField()", e);
+            }
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {

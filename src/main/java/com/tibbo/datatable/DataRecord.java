@@ -15,33 +15,39 @@ public class DataRecord implements Cloneable{
         }
     }
 
-    public <T> void setValue(String fieldName, T value){
+    public <T> void setFieldValue(String fieldName, T value){
         int index = 0;
         while(index < tableFormat.getFieldsSize() && !fieldName.equals(tableFormat.getFieldName(index))){
             index++;
         }
         if( index < tableFormat.getFieldsSize() && fieldName.equals(tableFormat.getFieldName(index)) ){
-            if( !values.get(index).getClass().equals(value.getClass()) ){
-                throw new IllegalStateException("data types do not match in setValue");
+            if( (value == null && tableFormat.isFieldNullable(index) )
+                    || values.get(index).getClass().equals(value.getClass()) ){
+                tableFormat.validateField(index, value);
+                values.set(index, value);
             }
             else {
-                values.set(index, value);
+
+                throw new IllegalStateException("data types do not match in setFieldValue()");
             }
         }
         else{
-            throw new IllegalStateException("field with name '"+ fieldName + "' wasn't found in setValue");
+            throw new IllegalStateException("field with name '"+ fieldName + "' wasn't found in setFieldValue()");
         }
     }
 
-    public <T> void setValue(int fieldIndex, T value){
-        if(values == null || fieldIndex < 0 || fieldIndex > values.size()){
-            throw new IllegalStateException("wrong fieldIndex in setValue: " + fieldIndex);
+    public <T> void setFieldValue(int index, T value){
+        if(values == null || index < 0 || index > values.size()){
+            throw new IllegalStateException("wrong fieldIndex in setFieldValue(): " + index);
         }
-        else if( !values.get(fieldIndex).getClass().equals(value.getClass()) ){
-            throw new IllegalStateException("data types do not match in setValue");
+        else if( (value == null && tableFormat.isFieldNullable(index) )
+                || values.get(index).getClass().equals(value.getClass()) ){
+            tableFormat.validateField(index, value);
+            values.set(index, value);
         }
         else {
-            values.set(fieldIndex, value);
+            throw new IllegalStateException("data types do not match in setFieldValue()");
+
         }
     }
 
@@ -54,13 +60,13 @@ public class DataRecord implements Cloneable{
             return values.get(index);
         }
         else{
-            throw new IllegalStateException("field with name '"+ fieldName + "' wasn't found in getValue");
+            throw new IllegalStateException("field with name '"+ fieldName + "' wasn't found in getFieldValue()");
         }
     }
 
-    public Object getValue(int fieldIndex){
+    public Object getFieldValue(int fieldIndex){
         if(values == null || fieldIndex < 0 || fieldIndex > values.size()){
-            throw new IllegalStateException("wrong fieldIndex in getValue: " + fieldIndex);
+            throw new IllegalStateException("wrong fieldIndex in getFieldValue(): " + fieldIndex);
         }
         else  {
             return values.get(fieldIndex);

@@ -3,6 +3,9 @@ package com.tibbo.datatable;
 public class RegexFieldValidator<T> implements FieldValidator<T>{
     private String regex;
 
+    public RegexFieldValidator(String regex){
+        this.regex = regex;
+    }
     public String getRegex() {
         return regex;
     }
@@ -21,7 +24,7 @@ public class RegexFieldValidator<T> implements FieldValidator<T>{
     @Override
     public void validate(T value) throws ValidateException {
         if(value == null || !value.toString().matches(regex) )
-            throw new ValidateException("Doesn't match regular expression");
+            throw new ValidateException("Value \"" + value.toString() + "\" doesn't match regular expression \"" + regex + "\"");
     }
 
     @Override
