@@ -59,7 +59,8 @@ public class TableFormat implements Cloneable {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    protected TableFormat clone() throws CloneNotSupportedException {
+        TableFormat tableFormat = (TableFormat) super.clone( );
+        return tableFormat;
     }
 }

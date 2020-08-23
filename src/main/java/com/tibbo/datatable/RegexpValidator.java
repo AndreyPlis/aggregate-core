@@ -14,7 +14,7 @@ public class RegexpValidator<T> implements FieldValidator<T> {
     }
 
     @Override
-    public boolean validate(T value) {
+    public boolean validate(T value) throws ExceptionValidator {
         return Pattern.matches( regular, value.toString( ) );
     }
 }

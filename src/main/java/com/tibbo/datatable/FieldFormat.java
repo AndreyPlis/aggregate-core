@@ -1,5 +1,6 @@
 package com.tibbo.datatable;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public abstract class FieldFormat<T> implements Cloneable{
@@ -8,6 +9,7 @@ public abstract class FieldFormat<T> implements Cloneable{
     private Boolean nullable = true;
     private Boolean hidden = false;
     private T defaultValue;
+    private List<FieldValidator> fieldValidators = new ArrayList<FieldValidator>();
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
@@ -58,9 +60,25 @@ public abstract class FieldFormat<T> implements Cloneable{
     public void setDefaultValue(T defaultValue) {
         this.defaultValue = defaultValue;
     }
+
+    public void addFieldValidator( FieldValidator fieldValidator ) {
+        fieldValidators.add( fieldValidator );
+    }
+
+    protected void validate( T value ) throws ExceptionValidator {
+        for (FieldValidator fieldValidator: fieldValidators) {
+            try {
+                fieldValidator.validate(value);
+            } catch ( ExceptionValidator e){
+                System.err.println( "Catch exception" );
+            }
+        }
+    }
+
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    protected FieldFormat clone() throws CloneNotSupportedException {
+        FieldFormat fieldFormat = (FieldFormat) super.clone( );
+        return fieldFormat;
     }
 
     @Override
@@ -68,15 +86,17 @@ public abstract class FieldFormat<T> implements Cloneable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FieldFormat<?> that = (FieldFormat<?>) o;
-        return name.equals(that.name) &&
-                description.equals(that.description) &&
-                nullable.equals(that.nullable) &&
-                hidden.equals( that.hidden );
+        return Objects.equals(name, that.name) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(nullable, that.nullable) &&
+                Objects.equals(hidden, that.hidden) &&
+                Objects.equals(defaultValue, that.defaultValue) &&
+                Objects.equals(fieldValidators, that.fieldValidators);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, nullable, hidden);
+        return Objects.hash(name, description, nullable, hidden, defaultValue, fieldValidators);
     }
 
     @Override
@@ -86,6 +106,8 @@ public abstract class FieldFormat<T> implements Cloneable{
                 ", description='" + description + '\'' +
                 ", nullable=" + nullable +
                 ", hidden=" + hidden +
+                ", defaultValue=" + defaultValue +
+                ", fieldValidators=" + fieldValidators +
                 '}';
     }
 }

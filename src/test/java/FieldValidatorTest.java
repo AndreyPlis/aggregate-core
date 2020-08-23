@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class FieldValidatorTest {
 
-    @Test
+  /*  @Test
     public void limitValidatorIntFieldFormat( ){
         LimitsValidator lv = new LimitsValidator( 1, 4 );
         assertEquals( false, lv.validate( 123456789 ) );
@@ -25,5 +25,5 @@ public class FieldValidatorTest {
         assertEquals( true, nv.validate( bff ) );
         bff = true;
         assertEquals( false, nv.validate( bff ) );
-    }
+    }*/
 }

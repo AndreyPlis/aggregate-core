@@ -1,8 +1,12 @@
 package com.tibbo.datatable;
 
 public class LimitsValidator<T> implements FieldValidator<T>{
-    private int minValue = 0;
-    private int maxValue = 0;
+    private int minValue;
+    private int maxValue;
+
+    public LimitsValidator(  ){
+        this( 0,0 );
+    }
 
     public LimitsValidator( int minValue, int maxValue ){
         this.minValue = minValue;
@@ -18,7 +22,7 @@ public class LimitsValidator<T> implements FieldValidator<T>{
     }
 
     @Override
-    public boolean validate(T value) {
+    public boolean validate(T value) throws ExceptionValidator  {
         if( value.toString( ).length( ) > maxValue || value.toString( ).length( ) < minValue ) {
             return false;
         }

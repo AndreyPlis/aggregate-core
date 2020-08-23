@@ -13,8 +13,8 @@ public class FieldFormatTest {
 
     @Test
     public void createStringFieldFormatFromFactory() {
-        FieldFormat ff = FieldFormatFactory.createFieldFormat( FieldFormat.STRING_FIELD, "test", "string field" );
-        assertEquals(FieldFormat.STRING_FIELD,ff.getType());
+        FieldFormat ff1 = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "test", "string field", false, false, "test");
+        assertEquals(FieldFormat.STRING_FIELD,ff1.getType());
     }
 
     @Test
