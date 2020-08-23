@@ -24,6 +24,10 @@ public class TableFormat implements Cloneable {
         this.maxCountLine = maxCountLine;
     }
 
+    public FieldFormat getField(int value){
+        return fields.get(value);
+    }
+
     public void addField(FieldFormat fieldFormat)
     {
         fields.add(fieldFormat);
