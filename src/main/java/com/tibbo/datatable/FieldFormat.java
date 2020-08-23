@@ -7,7 +7,7 @@ public abstract class FieldFormat<T> implements Cloneable{
     private String description;
     private Boolean nullable;
     private Boolean hidden;
-    private String defaultValue;
+    private Object defaultValue;
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
@@ -53,11 +53,11 @@ public abstract class FieldFormat<T> implements Cloneable{
         this.hidden = hidden;
     }
 
-    public String getDefaultValue() {
+    public Object getDefaultValue() {
         return defaultValue;
     }
 
-    public void setDefaultValue(String defaultValue) {
+    public void setDefaultValue(Object defaultValue) {
         this.defaultValue = defaultValue;
     }
 

@@ -9,11 +9,11 @@ public class FieldFormatFactory {
             ff.setDefaultValue("Need text");
         } else if (type == FieldFormat.INTEGER_FIELD){
             ff = new IntFieldFormat();
-            ff.setDefaultValue("0");
+            ff.setDefaultValue(0);
         }
         else if (type == FieldFormat.BOOLEAN_FIELD){
             ff = new BooleanFieldFormat();
-            ff.setDefaultValue("true");
+            ff.setDefaultValue(true);
         }
         ff.setName(name);
         ff.setDescription(description);
