@@ -1,21 +1,23 @@
-package com.tibbo.datatable;
+package com.tibbo.datatable.field;
+
+import com.tibbo.datatable.*;
+import com.tibbo.datatable.validator.*;
 
 import java.util.*;
 
-public abstract class FieldFormat<T> implements Cloneable{
-    private String name;
-    private String description;
-    private Boolean nullable;
-
-    private List<FieldValidator> validators = new ArrayList<>();
-
-    private Boolean hidden;
-
-    private T defaultValue;
+public abstract class FieldFormat<T> implements Cloneable {
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
     public static final char BOOLEAN_FIELD = 'B';
+
+    private String name;
+    private String description;
+    private Boolean nullable;
+    private Boolean hidden;
+    private T defaultValue;
+    private List<FieldValidator> validators = new ArrayList<>();
+
 
     public abstract String valueToString(T value);
 
@@ -59,8 +61,7 @@ public abstract class FieldFormat<T> implements Cloneable{
         return defaultValue;
     }
 
-    public void addValidator(FieldValidator fieldValidator)
-    {
+    public void addValidator(FieldValidator fieldValidator) {
         validators.add(fieldValidator);
     }
 
@@ -98,12 +99,12 @@ public abstract class FieldFormat<T> implements Cloneable{
     }
 
     @Override
-    public FieldFormat clone()  {
+    public FieldFormat clone() {
         try {
             FieldFormat ff = (FieldFormat) super.clone();
             return ff;
         } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("cannot clone",e);
+            throw new IllegalStateException("cannot clone", e);
         }
     }
 

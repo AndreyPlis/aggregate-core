@@ -1,5 +1,7 @@
 package com.tibbo.datatable;
 
+import com.tibbo.datatable.field.*;
+
 import java.util.*;
 
 public class TableFormat implements Cloneable {
@@ -9,7 +11,6 @@ public class TableFormat implements Cloneable {
     private Integer maxRecords;
 
     public TableFormat() {
-        this(1,1);
     }
 
     public TableFormat(Integer minRecords, Integer maxRecords) {

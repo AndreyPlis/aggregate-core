@@ -1,4 +1,4 @@
-import com.tibbo.datatable.*;
+import com.tibbo.datatable.field.*;
 import org.junit.*;
 
 import static org.junit.Assert.*;

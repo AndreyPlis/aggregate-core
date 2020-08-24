@@ -1,4 +1,6 @@
-package com.tibbo.datatable;
+package com.tibbo.datatable.field;
+
+import com.tibbo.datatable.field.*;
 
 public class StringFieldFormat extends FieldFormat<String> {
 

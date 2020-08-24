@@ -1,4 +1,4 @@
-package com.tibbo.datatable;
+package com.tibbo.datatable.field;
 
 public class BooleanFieldFormat extends FieldFormat<Boolean> {
     @Override
