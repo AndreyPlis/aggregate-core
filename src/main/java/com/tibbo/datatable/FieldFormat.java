@@ -1,11 +1,15 @@
 package com.tibbo.datatable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class FieldFormat<T> implements Cloneable{
     private String name;
     private String description;
     private Boolean nullable;
     private Boolean hidden = false;
     private T defaultValue;
+    private List<FieldValidator> validators = new ArrayList<>();
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
@@ -95,6 +99,22 @@ public abstract class FieldFormat<T> implements Cloneable{
     }
     @Override
     public  abstract  FieldFormat clone();
+
+    public void addValidator(FieldValidator fieldValidator)
+    {
+        validators.add(fieldValidator);
+    }
+
+    public void validate(T value) {
+        for (FieldValidator validator : validators) {
+            try {
+                validator.validate(value);
+            } catch (ValidationException e) {
+                throw new IllegalStateException(e);
+            }
+        }
+    }
+
 
 
 }
