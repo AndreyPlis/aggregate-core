@@ -18,14 +18,16 @@ public class TableFormat implements Cloneable {
         this.maxRecords = maxRecords;
     }
 
-    public TableFormat addField(FieldFormat fieldFormat)
-    {
+    public TableFormat addField(FieldFormat fieldFormat) {
         fields.add(fieldFormat);
         return this;
     }
 
-    public boolean removeField(FieldFormat fieldFormat)
-    {
+    public FieldFormat getField(int index) {
+        return fields.get(index);
+    }
+
+    public boolean removeField(FieldFormat fieldFormat) {
         return fields.remove(fieldFormat);
     }
 
@@ -65,5 +67,9 @@ public class TableFormat implements Cloneable {
 
     public void setMinRecords(Integer minRecords) {
         this.minRecords = minRecords;
+    }
+
+    public int getFieldCount() {
+        return fields.size();
     }
 }
