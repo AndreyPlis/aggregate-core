@@ -8,7 +8,15 @@ public interface DataTable {
 
     void removeRecord(int index);
 
+    DataRecord rec(); //return first row
+
+    Object get(); //return value of first row and first field
+
     DataRecord getRecord(int index);
+
+    void setCellValue(String field, int index, Object value);
+
+    Object getCellValue(String field, int index);
 
     TableFormat getFormat();
 

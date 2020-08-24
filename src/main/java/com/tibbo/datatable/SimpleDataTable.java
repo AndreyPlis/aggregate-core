@@ -22,7 +22,27 @@ public class SimpleDataTable implements DataTable, Cloneable {
     }
 
     @Override
+    public DataRecord rec() {
+        return null;
+    }
+
+    @Override
+    public Object get() {
+        return null;
+    }
+
+    @Override
     public DataRecord getRecord(int index) {
+        return null;
+    }
+
+    @Override
+    public void setCellValue(String field, int index, Object value) {
+
+    }
+
+    @Override
+    public Object getCellValue(String field, int index) {
         return null;
     }
 
