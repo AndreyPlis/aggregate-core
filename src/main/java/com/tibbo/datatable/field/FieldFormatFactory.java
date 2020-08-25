@@ -3,15 +3,21 @@ package com.tibbo.datatable.field;
 public class FieldFormatFactory {
 
 
-    public static <T> FieldFormat<T> createFieldFormat(Character type, String name, String description, Boolean hidden, T defaultValue) {
-        FieldFormat ff = createFieldFormat(type, name,description, hidden);
+    public static <T> FieldFormat<T> createFieldFormat(Character type, String name, String description, Boolean nullable, Boolean hidden, T defaultValue) {
+        FieldFormat ff = createFieldFormat(type, name, description, nullable, hidden);
         ff.setDefaultValue(defaultValue);
         return ff;
     }
 
-    public static FieldFormat createFieldFormat(Character type, String name, String description, Boolean hidden) {
-        FieldFormat ff = createFieldFormat(type, name,description);
+    public static  FieldFormat createFieldFormat(Character type, String name, String description, Boolean nullable, Boolean hidden) {
+        FieldFormat ff = createFieldFormat(type, name, description, nullable);
         ff.setHidden(hidden);
+        return ff;
+    }
+
+    public static FieldFormat createFieldFormat(Character type, String name, String description, Boolean nullable) {
+        FieldFormat ff = createFieldFormat(type, name, description);
+        ff.setNullable(nullable);
         return ff;
     }
 
