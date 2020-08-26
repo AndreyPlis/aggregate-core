@@ -5,4 +5,7 @@
 1.3 Сделать проверку на вхождение имени филда в тайблформат.
 1.4 Equals HashCode, clone in DataRecord.
 2.DataTable
-2.1 Equals HashCode, clone in DataTable.
+2.1 Implement interface.
+2.2 Equals HashCode, clone in DataTable.
+2.3 Implement tests in DataTableTest.
+3.3 Implement StubContext
