@@ -63,7 +63,7 @@ public class SimpleDataTable implements DataTable, Cloneable {
 
     @Override
     public void sort(String fieldName, boolean desc) {
-        dataRecords.sort(new CompareFields(fieldName));
+        dataRecords.sort(new CompareFields(fieldName, desc));
     }
 
 
@@ -75,7 +75,7 @@ public class SimpleDataTable implements DataTable, Cloneable {
             dataTable.addRecord(record);
         return dataTable;
     }
-    
+
 
     @Override
     protected Object clone() throws CloneNotSupportedException {

@@ -30,9 +30,9 @@ public class Main {
 
         DataRecord dataRecord = new DataRecord(tableFormat);
         dataRecord.setValue("ID", 1);
-        dataRecord.setValue("Name", "Dmitrii");
+        dataRecord.setValue("Name", "Pavel");
         dataRecord.setValue(2, "Demichev");
-        dataRecord.setValue("isWorking", true);
+        dataRecord.setValue("isWorking", false);
         dataRecord.setValue("Age", 34);
 
         DataRecord dataRecord1 = new DataRecord(tableFormat);
@@ -51,7 +51,7 @@ public class Main {
 
         DataRecord dataRecord3 = new DataRecord(tableFormat);
         dataRecord3.setValue("ID", 2);
-        dataRecord3.setValue("Name", "Alex");
+        dataRecord3.setValue("Name", "Ivan");
         dataRecord3.setValue(2, "Demichev");
         dataRecord3.setValue("isWorking", true);
         dataRecord3.setValue("Age", 20);
@@ -69,7 +69,7 @@ public class Main {
         int age =  (int) dataRecord.getValue("Age");
         int age2 = (int) dataRecord.getValue("Age");
         System.out.println(age + age2);
-        simpleDataTable.sort("ID", true);
+        simpleDataTable.sort("isWorking", true);
         System.out.println(simpleDataTable);
 
 
