@@ -27,6 +27,7 @@ public class TableFormat implements Cloneable {
         return fields.get(index);
     }
 
+
     public boolean removeField(FieldFormat fieldFormat) {
         return fields.remove(fieldFormat);
     }

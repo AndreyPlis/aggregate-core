@@ -45,6 +45,7 @@ public class DataRecord implements Cloneable {
         return data.get(fieldName);
     }
 
+
     private FieldFormat findField(int index) {
         return tableFormat.getField(index);
     }
@@ -56,7 +57,7 @@ public class DataRecord implements Cloneable {
 
     private void checkIndexValue(int index) {
         if (index >= tableFormat.getFieldCount() || index < 0)
-            throw new IllegalStateException(String.format("Index %d out of bounds, must between 0 and %d",index, tableFormat.getFieldCount()));
+            throw new IllegalStateException(String.format("Index %d out of bounds, must between 0 and %d", index, tableFormat.getFieldCount()));
     }
 
     @Override
@@ -75,10 +76,7 @@ public class DataRecord implements Cloneable {
 
     @Override
     public String toString() {
-        return "DataRecord{" +
-                "tableFormat=" + tableFormat +
-                ", data=" + data +
-                '}';
+        return "DataRecord = " + data + "\n";
     }
 
     @Override
@@ -86,12 +84,11 @@ public class DataRecord implements Cloneable {
         DataRecord clone = (DataRecord) super.clone();
         Map<String, Object> dataCopy = new LinkedHashMap<>();
         Set<Map.Entry<String, Object>> entries = clone.data.entrySet();
-        for (Map.Entry<String, Object> mapEntry: entries){
-            dataCopy.put(mapEntry.getKey(),mapEntry.getValue());
+        for (Map.Entry<String, Object> mapEntry : entries) {
+            dataCopy.put(mapEntry.getKey(), mapEntry.getValue());
         }
         clone.data = dataCopy;
         return clone;
     }
-
 
 }

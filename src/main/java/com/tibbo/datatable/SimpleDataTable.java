@@ -1,14 +1,15 @@
 package com.tibbo.datatable;
 
-import javax.xml.crypto.Data;
-import java.security.Key;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SimpleDataTable implements DataTable, Cloneable {
     private List<DataRecord> dataRecords = new ArrayList<>();
     private TableFormat tableFormat;
+
+    public SimpleDataTable(TableFormat tableFormat) {
+        this.tableFormat = tableFormat;
+    }
 
     @Override
     public void addRecord(DataRecord dataRecord) {
@@ -52,7 +53,7 @@ public class SimpleDataTable implements DataTable, Cloneable {
 
     @Override
     public TableFormat getFormat() {
-        return null;
+        return tableFormat;
     }
 
     @Override
@@ -62,17 +63,19 @@ public class SimpleDataTable implements DataTable, Cloneable {
 
     @Override
     public void sort(String fieldName, boolean desc) {
-
+        dataRecords.sort(new CompareFields(fieldName));
     }
+
 
     @Override
     public DataTable filter(String fieldName, Object value) {
-        DataTable dataTable = new SimpleDataTable();
+        DataTable dataTable = new SimpleDataTable(tableFormat);
         List<DataRecord> dataRecords1 = dataRecords.stream().filter(dataRecord -> value.equals(dataRecord.getValue(fieldName))).collect(Collectors.toList());
-        for (DataRecord record: dataRecords1)
+        for (DataRecord record : dataRecords1)
             dataTable.addRecord(record);
         return dataTable;
     }
+    
 
     @Override
     protected Object clone() throws CloneNotSupportedException {

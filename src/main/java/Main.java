@@ -56,13 +56,21 @@ public class Main {
         dataRecord3.setValue("isWorking", true);
         dataRecord3.setValue("Age", 20);
 
-        SimpleDataTable simpleDataTable = new SimpleDataTable();
+        SimpleDataTable simpleDataTable = new SimpleDataTable(tableFormat);
         simpleDataTable.addRecord(dataRecord);
         simpleDataTable.addRecord(dataRecord1);
         simpleDataTable.addRecord(dataRecord2);
         simpleDataTable.addRecord(dataRecord3);
-
-
+        System.out.println(simpleDataTable);
+        System.out.println("-------------------------------");
+        //simpleDataTable.sort("ID", true);
+        System.out.println("-------------------------------");
+        //System.out.println(simpleDataTable);
+        int age =  (int) dataRecord.getValue("Age");
+        int age2 = (int) dataRecord.getValue("Age");
+        System.out.println(age + age2);
+        simpleDataTable.sort("ID", true);
+        System.out.println(simpleDataTable);
 
 
     }
