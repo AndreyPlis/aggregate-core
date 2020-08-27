@@ -8,14 +8,14 @@ public interface Context {
 
     List<VariableDefinition> getVariableDefinitions();
 
-    void setVariableDefinition(VariableDefinition vd);
+    void setVariableDefinition(VariableDefinition vd, int index);
 
-    VariableDefinition getVariableDefinition();
+    VariableDefinition getVariableDefinition(int index);
 
     DataTable getVariable(String name);
 
     void setVariable(String name, DataTable dataTable);
 
-    String getName();
+    String getName(int index);
 
 }
