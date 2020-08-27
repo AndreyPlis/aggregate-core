@@ -27,11 +27,17 @@ public class TableFormat implements Cloneable {
     }
 
     public FieldFormat getField(int index) {
+        if(index < 0 || index >= getFieldCount() ){
+            throw new IllegalStateException("Wrong index value "+index+" in TableFormat.getField()");
+        }
         return fields.get(index);
     }
 
     public boolean removeField(FieldFormat fieldFormat) {
-        return fields.remove(fieldFormat);
+        if( fields.contains(fieldFormat) ) {
+            return fields.remove(fieldFormat);
+        }
+        return false;
     }
 
 
@@ -40,6 +46,7 @@ public class TableFormat implements Cloneable {
         TableFormat clone = (TableFormat) super.clone();
         ArrayList<FieldFormat> list = new ArrayList<>();
         for (FieldFormat field : fields) list.add(field.clone());
+        clone.fields = list;
         return clone;
     }
 

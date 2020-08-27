@@ -1,6 +1,6 @@
 package com.tibbo.datatable;
 
-public class LimitsFieldValidator extends FieldValidator{
+public class LimitsFieldValidator {
     private Integer minValue;
     private Integer maxValue;
 

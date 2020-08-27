@@ -2,12 +2,16 @@ package com.tibbo.datatable;
 
 import java.util.*;
 
+import com.tibbo.datatable.validator.*;
+
 public abstract class FieldFormat<T> implements Cloneable{
     private String name;
     private String description;
     private Boolean nullable;
     private Boolean hidden;
     private T defaultValue;
+
+    private List<FieldValidator> validators = new ArrayList<>();
 
     public static final char INTEGER_FIELD = 'I';
     public static final char STRING_FIELD = 'S';
@@ -59,9 +63,37 @@ public abstract class FieldFormat<T> implements Cloneable{
         this.defaultValue = defaultValue;
     }
 
+    public boolean addValidator(FieldValidator validator){
+        if(validators != null){
+            return validators.add(validator);
+        }
+        return false;
+    }
+
+    public boolean removeValidator(FieldValidator validator){
+        if(validators != null){
+            return validators.remove(validator);
+        }
+        return false;
+    }
+
+    public void validate(Object value) {
+        if( !value.getClass().equals(defaultValue.getClass()) ){
+            throw new IllegalStateException("Mismatched data types");
+        }
+        try {
+            for (FieldValidator validator : validators) {
+                validator.validate(value);
+            }
+        }
+        catch (ValidationException e){
+            throw new IllegalStateException("Validation fail.", e);
+        }
+    }
+
+
     @Override
     public boolean equals(Object o) {
-        //Remove placeholder: throw new UnsupportedOperationException();
         if(o == this) {
             return true;
         }
@@ -82,7 +114,6 @@ public abstract class FieldFormat<T> implements Cloneable{
 
     @Override
     public int hashCode() {
-        //I think, it was placeholder too: throw new UnsupportedOperationException();
         final int prime = 31;
         int result = 1;
         result = prime * result + (name == null ? 0 : name.hashCode());
@@ -95,7 +126,6 @@ public abstract class FieldFormat<T> implements Cloneable{
 
     @Override
     public String toString() {
-        //throw new UnsupportedOperationException();
         String result;
         result = "name: " + (name == null ? "null" : name) + "; ";
         result += "description: " + (description == null ? "null" : description) + "; ";

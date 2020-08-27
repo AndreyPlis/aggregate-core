@@ -1,6 +1,6 @@
 package com.tibbo.datatable;
 
-public class RegexFieldValidator extends FieldValidator{
+public class RegexFieldValidator {
     private String regex;
 
     public boolean valid(String value) {
