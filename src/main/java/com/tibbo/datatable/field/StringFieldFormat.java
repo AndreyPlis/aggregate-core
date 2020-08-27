@@ -1,4 +1,6 @@
-package com.tibbo.datatable;
+package com.tibbo.datatable.field;
+
+import com.tibbo.datatable.field.*;
 
 public class StringFieldFormat extends FieldFormat<String> {
 
@@ -9,7 +11,8 @@ public class StringFieldFormat extends FieldFormat<String> {
     }
 
     @Override
-    public String valueFromString(String value){
+
+    public String valueFromString(String value) {
         return value;
     }
 

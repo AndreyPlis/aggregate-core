@@ -1,4 +1,6 @@
-package com.tibbo.datatable;
+package com.tibbo.datatable.field;
+
+import com.tibbo.datatable.field.*;
 
 public class IntFieldFormat extends FieldFormat<Integer> {
 
@@ -8,7 +10,8 @@ public class IntFieldFormat extends FieldFormat<Integer> {
     }
 
     @Override
-    public Integer valueFromString(String value){
+
+    public Integer valueFromString(String value) {
         return Integer.parseInt(value);
     }
 

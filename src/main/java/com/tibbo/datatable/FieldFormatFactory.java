@@ -4,16 +4,8 @@ import javax.management.*;
 
 public abstract class FieldFormatFactory {
 
-    //public static FieldFormat createFieldFormat(Character type, String name, String description) {
     public static FieldFormat createFieldFormat(Character type, String... attr) {
         FieldFormat ff = null;
-        /*if (type == FieldFormat.STRING_FIELD)
-            ff = new StringFieldFormat();
-        else if (type == FieldFormat.INTEGER_FIELD)
-            ff = new IntFieldFormat();
-        ff.setName(name);
-        ff.setDescription(description);
-        return ff;*/
 
         switch (type){
             case FieldFormat.STRING_FIELD:

@@ -1,9 +1,10 @@
-import com.tibbo.datatable.*;
+import com.tibbo.datatable.field.*;
 import org.junit.*;
 
 import static org.junit.Assert.*;
 
 public class FieldFormatTest {
+
 
     @Test
     public void createStringFieldFormat() {
@@ -13,25 +14,9 @@ public class FieldFormatTest {
 
     @Test
     public void createStringFieldFormatFromFactory() {
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "DescrOfStr1", "true", "false");
-        assertEquals(FieldFormat.STRING_FIELD, ff.getType());
-        assertEquals("str1", ff.getName());
-        assertEquals("DescrOfStr1", ff.getDescription());
-        assertTrue(ff.getNullable());
-        assertFalse(ff.getHidden());
-        assertNull(ff.getDefaultValue());
+
     }
 
-    @Test
-    public void createIntFieldFormatFromFactory() {
-        FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "DescrOfInt1", "no", "no", "1234");
-        assertEquals(FieldFormat.INTEGER_FIELD, ff.getType());
-        assertEquals("int1", ff.getName());
-        assertEquals("DescrOfInt1", ff.getDescription());
-        assertFalse(ff.getNullable());
-        assertFalse(ff.getHidden());
-        assertEquals(1234, ff.getDefaultValue());
-    }
 
     //Boolean
     @Test
@@ -75,34 +60,27 @@ public class FieldFormatTest {
     @Test
     public void cloneString(){
         FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.STRING_FIELD, "str1", "DescrOfStr1");
-        try {
+
             FieldFormat f3 = ff.clone();
             assertTrue( f3.equals(ff));
-        }catch (CloneNotSupportedException cloneEx) {
-            cloneEx.printStackTrace();
-        }
+
     }
 
     @Test
     public void cloneInteger(){
         FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.INTEGER_FIELD, "int1", "DescrOfInt1");
-        try {
+
             FieldFormat f3 = ff.clone();
             assertTrue( f3.equals(ff));
-        }catch (CloneNotSupportedException cloneEx) {
-            cloneEx.printStackTrace();
-        }
+
     }
 
     @Test
     public void cloneBoolean(){
         FieldFormat ff = FieldFormatFactory.createFieldFormat(FieldFormat.BOOLEAN_FIELD, "bool1", "DescrOfBool1");
-        try {
-            FieldFormat f3 = ff.clone();
+           FieldFormat f3 = ff.clone();
             assertTrue( f3.equals(ff));
-        }catch (CloneNotSupportedException cloneEx) {
-            cloneEx.printStackTrace();
-        }
+
     }
 
     //hashcode equals
