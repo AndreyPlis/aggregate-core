@@ -25,4 +25,6 @@ public interface DataTable {
     void sort(String fieldName, boolean desc);
 
     DataTable filter(String fieldName, Object value);
+
+
 }
