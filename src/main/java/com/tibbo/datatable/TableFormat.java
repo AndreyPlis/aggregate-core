@@ -24,7 +24,18 @@ public class TableFormat implements Cloneable {
     }
 
     public FieldFormat getField(int index) {
+        if( index > fields.size( ) )
+            throw new ArrayIndexOutOfBoundsException( "Index outside the array FieldFormat" );
         return fields.get(index);
+    }
+
+    public FieldFormat getField(String fieldName) {
+        for ( FieldFormat field : fields ) {
+            if(field.getName().equals(fieldName)) {
+                return field;
+            }
+        }
+        return null;
     }
 
     public boolean removeField(FieldFormat fieldFormat) {
