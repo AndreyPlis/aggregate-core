@@ -30,12 +30,16 @@ public class TableFormat implements Cloneable {
     }
 
     public FieldFormat getField( String fieldName ) {
-        for ( FieldFormat field : fields ) {
-            if( field.getName( ).equals( fieldName ) ) {
-                return field;
+        FieldFormat field = null;
+        for ( FieldFormat field_item : fields ) {
+            if( field_item.getName( ).equals( fieldName ) ) {
+                field = field_item;
+                break;
             }
         }
-        return null;
+        if( field == null )
+            throw new NullPointerException( "Пустой филд" );
+        return field;
     }
 
     public boolean removeField(FieldFormat fieldFormat) {

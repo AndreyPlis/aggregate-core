@@ -4,7 +4,7 @@ import com.tibbo.datatable.field.*;
 
 import java.util.*;
 
-public class DataRecord {
+public class DataRecord implements Cloneable {
 
     private TableFormat tableFormat;
 
@@ -47,7 +47,10 @@ public class DataRecord {
 
     public Object getValue(String fieldName)
     {
-        return data.get(fieldName);
+        Object value = data.get( fieldName );
+        if( value == null )
+            throw new NullPointerException( "По заданному филду нет значений" );
+        return value;
     }
 
     private FieldFormat findField(int index)
@@ -58,5 +61,33 @@ public class DataRecord {
     private FieldFormat findField( String fieldName )
     {
         return tableFormat.getField( fieldName );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataRecord that = (DataRecord) o;
+        return Objects.equals(tableFormat, that.tableFormat) &&
+                Objects.equals(data, that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tableFormat, data);
+    }
+
+    @Override
+    public String toString() {
+        return "DataRecord{" +
+                "tableFormat=" + tableFormat +
+                ", data=" + data +
+                '}';
+    }
+
+    @Override
+    protected DataRecord clone() throws CloneNotSupportedException {
+        DataRecord dataRecord = (DataRecord) super.clone( );
+        return dataRecord;
     }
 }
