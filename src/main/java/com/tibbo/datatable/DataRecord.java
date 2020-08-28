@@ -41,4 +41,29 @@ public class DataRecord {
     {
         return tableFormat.getField(index);
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        if (!super.equals(object)) return false;
+        DataRecord that = (DataRecord) object;
+        return java.util.Objects.equals(tableFormat, that.tableFormat) &&
+                java.util.Objects.equals(data, that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), tableFormat, data);
+    }
+
+    public DataRecord clone(){
+        try{
+            return (DataRecord) super.clone();
+        }
+        catch (CloneNotSupportedException error){
+            throw new IllegalArgumentException("Cant be used", error);
+        }
+    }
+
 }
