@@ -57,6 +57,15 @@ public class DataRecord {
         return Objects.hash(super.hashCode(), tableFormat, data);
     }
 
+    @Override
+    public String toString() {
+        return "DataRecord{" +
+                "tableFormat=" + tableFormat +
+                ", data=" + data +
+                '}';
+    }
+
+    @Override
     public DataRecord clone(){
         try{
             return (DataRecord) super.clone();
