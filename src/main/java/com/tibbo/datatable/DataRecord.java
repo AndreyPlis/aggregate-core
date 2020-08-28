@@ -10,20 +10,33 @@ public class DataRecord {
 
     private Map<String,Object> data = new LinkedHashMap<>();
 
+    private void validateInputData(Object value, int index, String fieldName){
+        FieldFormat fieldFormat = null;
+        if(index > 0){
+            fieldFormat = findField(index);
+        }
+        if(fieldName.isEmpty() == false){
+            fieldFormat = findField(fieldName);
+        }
+        if(fieldFormat == null){
+            throw new NullPointerException("FieldFormat is null");
+        }
+        fieldFormat.validate( value );
+        data.put(fieldFormat.getName(), value);
+    }
+
     public DataRecord(TableFormat tableFormat) {
         this.tableFormat = tableFormat;
     }
 
     public void setValue(String fieldName, Object value)
     {
-        data.put(fieldName, value);
+        validateInputData(value, 0, fieldName);
     }
 
     public void setValue(int index, Object value)
     {
-        FieldFormat ff = findField(index);
-        ff.validate(value);
-        setValue(ff.getName(),value);
+        validateInputData(value, index, "");
     }
 
     public Object getValue(int index)
@@ -40,6 +53,11 @@ public class DataRecord {
     private FieldFormat findField(int index)
     {
         return tableFormat.getField(index);
+    }
+
+    private FieldFormat findField( String fieldName )
+    {
+        return tableFormat.getField(fieldName);
     }
 
     @Override
