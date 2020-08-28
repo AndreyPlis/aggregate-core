@@ -1,12 +1,11 @@
 # aggregate-core
-1. FieldFormat
-1.1 Реализовать hashCode, equals, clone, toString
-1.2 В Наследниках реализовать абстрактные методы.
-1.3 Написать тесты
-1.4 Седалть фабрику или метод или билдер (на усмотрение)
-1.5 Сделать BooleanFieldFormat
-1.6 Добавить поля hidden, defaultValue
-1.7 Добавить FieldValidator
-2 TableFormat
-2.1  Реализовать hashCode, equals, clone, toString
-2.2 Добавить поля мин и мах количества строк
+1. DataRecord
+1.1 Добавить валидицию на setValue в оба метода.
+1.2 Сделать проверки на границы индексов для тайбл формата.
+1.3 Сделать проверку на вхождение имени филда в тайблформат.
+1.4 Equals HashCode, clone in DataRecord.
+2.DataTable
+2.1 Implement interface.
+2.2 Equals HashCode, clone in DataTable.
+2.3 Implement tests in DataTableTest.
+3.3 Implement StubContext
