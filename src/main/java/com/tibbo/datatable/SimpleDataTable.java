@@ -72,9 +72,23 @@ public class SimpleDataTable implements DataTable, Cloneable {
         return dataRecords.size();
     }
 
+    private void reverse() {
+        int last = dataRecords.toArray().length - 1;
+        int middle = dataRecords.toArray().length / 2;
+        for (int i = 0; i <= middle; i++) {
+            DataRecord temp = dataRecords.get(i);
+            dataRecords.set( i, dataRecords.get( last - i ) );
+            dataRecords.set( last - i, temp );
+        }
+    }
+
     @Override
     public void sort(String fieldName, boolean desc) {
-        Collections.sort( dataRecords,( o1, o2 ) ->  o1.getValue( fieldName ).toString().compareTo( o2.getValue( fieldName ).toString( ) ) );
+        Collections.sort( dataRecords, ( o1, o2 ) ->  o1.getValue( fieldName ).toString().compareTo( o2.getValue( fieldName ).toString( ) ) );
+        if ( desc ) {
+            reverse( );
+        }
+
     }
 
     @Override
@@ -107,4 +121,11 @@ public class SimpleDataTable implements DataTable, Cloneable {
         DataTable dataTable = (DataTable) super.clone();
         return dataTable;
     }
+    public List<DataRecord> getDataRecords( )
+    {
+        List<DataRecord> dataRecords = new ArrayList<>( );
+        dataRecords.addAll( this.dataRecords );
+        return dataRecords;
+    }
+
 }

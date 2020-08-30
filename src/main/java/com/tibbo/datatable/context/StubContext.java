@@ -11,31 +11,33 @@ public class StubContext implements Context{
 
     @Override
     public List<VariableDefinition> getVariableDefinitions() {
-        return null; // do not return original array variableDefinitions
+        List<VariableDefinition> variableDefinitions = new ArrayList<>( );
+        variableDefinitions.addAll( this.variableDefinitions );
+        return variableDefinitions; // do not return original array variableDefinitions
     }
 
     @Override
     public void setVariableDefinition(VariableDefinition vd) {
-
+        variableDefinitions.add( vd );
     }
 
     @Override
     public VariableDefinition getVariableDefinition() {
-        return null;
+        return variableDefinitions.get( 0 );
     }
 
     @Override
     public DataTable getVariable(String name) {
-        return null;
+        return variables.get( name );
     }
 
     @Override
     public void setVariable(String name, DataTable dataTable) {
-
+        variables.put( name, dataTable );
     }
 
     @Override
     public String getName() {
-        return null;
+        return variableDefinitions.get( 0 ).getName( );
     }
 }
