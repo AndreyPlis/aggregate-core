@@ -1,11 +1,11 @@
 import com.tibbo.datatable.*;
+import com.tibbo.datatable.field.*;
 
 import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
-
         Map<String, Integer> data = new HashMap<>();
 
         data.put("foo",1);

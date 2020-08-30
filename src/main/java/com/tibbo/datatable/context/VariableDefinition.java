@@ -1,8 +1,11 @@
 package com.tibbo.datatable.context;
 
-import com.tibbo.datatable.*;
+import java.util.*;
 
-public class VariableDefinition {
+import com.tibbo.datatable.*;
+import com.tibbo.datatable.field.*;
+
+public class VariableDefinition implements Cloneable {
 
     private String name;
     private boolean writable;
@@ -31,5 +34,15 @@ public class VariableDefinition {
 
     public void setFormat(TableFormat format) {
         this.format = format;
+    }
+
+    public VariableDefinition clone() throws CloneNotSupportedException{
+        VariableDefinition definition = (VariableDefinition) super.clone();
+        TableFormat tableFormat = new TableFormat(format.getMinRecords(), format.getMaxRecords());
+        for(int i=0; i<format.getFieldCount(); i++){
+            tableFormat.addField( format.getField(i).clone() );
+        }
+        definition.setFormat(tableFormat);
+        return definition;
     }
 }

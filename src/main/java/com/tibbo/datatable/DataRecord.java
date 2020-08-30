@@ -4,7 +4,7 @@ import com.tibbo.datatable.field.*;
 
 import java.util.*;
 
-public class DataRecord {
+public class DataRecord implements Cloneable {
 
     private TableFormat tableFormat;
 
@@ -17,7 +17,11 @@ public class DataRecord {
     public void setValue(String fieldName, Object value)
     {
         FieldFormat ff = findField(fieldName);
-        if(ff != null) {
+        if(ff == null){
+            throw new IllegalStateException("Field with name " + fieldName + " was not found.");
+        }
+        else
+        {
             ff.validate(value);
             data.put(fieldName, value);
         }
@@ -25,6 +29,9 @@ public class DataRecord {
 
     public void setValue(int index, Object value)
     {
+        if(index < 0 || index > tableFormat.getFieldCount() ){
+            throw new IllegalStateException("The index is out range in setValue() function.");
+        }
         FieldFormat ff = findField(index);
         ff.validate(value);
         setValue(ff.getName(),value);
@@ -32,12 +39,18 @@ public class DataRecord {
 
     public Object getValue(int index)
     {
+        if(index < 0 || index > tableFormat.getFieldCount() ){
+            throw new IllegalStateException("The index is out range in getValue() function.");
+        }
         FieldFormat ff = findField(index);
         return getValue(ff.getName());
     }
 
     public Object getValue(String fieldName)
     {
+        if( !data.containsKey(fieldName) ){
+            throw new IllegalStateException("Field with name " + fieldName + " does not exist.");
+        }
         return data.get(fieldName);
     }
 

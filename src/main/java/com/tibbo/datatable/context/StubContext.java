@@ -11,31 +11,52 @@ public class StubContext implements Context{
 
     @Override
     public List<VariableDefinition> getVariableDefinitions() {
-        return null; // do not return original array variableDefinitions
+        List<VariableDefinition> list = new ArrayList<>();
+        try{
+            for(VariableDefinition def:variableDefinitions){
+                list.add(def.clone());
+            }
+        }
+        catch (CloneNotSupportedException e){
+            throw new IllegalStateException("Clone don't supported in getVariableDefinitions", e);
+        }
+        return list;
     }
 
     @Override
     public void setVariableDefinition(VariableDefinition vd) {
-
+        if(vd == null)
+            throw new IllegalArgumentException("Variable definition must don't be null");
+        variableDefinitions.add(0, vd);
     }
 
     @Override
     public VariableDefinition getVariableDefinition() {
-        return null;
+        if(variableDefinitions.size() == 0){
+            return null;
+        }
+        return variableDefinitions.get(0);
     }
 
     @Override
     public DataTable getVariable(String name) {
-        return null;
+        if(name == null || !variables.containsKey(name))
+            return null;
+        return variables.get(name);
     }
 
     @Override
     public void setVariable(String name, DataTable dataTable) {
-
+        if(name == null || name.equals(""))
+            throw new IllegalStateException("Name of variable must don't be null");
+        variables.put(name, dataTable);
     }
 
     @Override
     public String getName() {
-        return null;
+        if (variableDefinitions.size() == 0){
+            return null;
+        }
+        return variableDefinitions.get(0).getName();
     }
 }
