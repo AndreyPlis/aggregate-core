@@ -12,13 +12,13 @@ public class StubContext implements Context {
     @Override
     public List<VariableDefinition> getVariableDefinitions() {
         List<VariableDefinition> newList = new ArrayList<>();
-        newList.addAll(0, variableDefinitions);
+        newList.addAll(variableDefinitions);
         return newList; // do not return original array variableDefinitions
     }
 
     @Override
     public void setVariableDefinition(VariableDefinition vd, int index) {
-        if (index < variableDefinitions.size())
+        if (index < variableDefinitions.size() && index >= 0)
             variableDefinitions.set(index, vd);
         else
             variableDefinitions.add(vd);
@@ -32,7 +32,7 @@ public class StubContext implements Context {
 
     @Override
     public DataTable getVariable(String name) {
-        checkNameVariable(name);
+        containsName(name);
         return variables.get(name);
     }
 
@@ -52,7 +52,7 @@ public class StubContext implements Context {
             throw new IllegalStateException(String.format("Index %d out of bounds, must between 0 and %d", index, variableDefinitions.size()));
     }
 
-    private void checkNameVariable(String name) {
+    private void containsName(String name) {
         if (!variables.containsKey(name))
             throw new IllegalStateException(String.format("Name %s not found", name));
     }
