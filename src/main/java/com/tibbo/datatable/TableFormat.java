@@ -27,6 +27,8 @@ public class TableFormat implements Cloneable {
         return fields.get(index);
     }
 
+
+
     public boolean removeField(FieldFormat fieldFormat) {
         return fields.remove(fieldFormat);
     }
@@ -50,7 +52,7 @@ public class TableFormat implements Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(fields);
+        return Objects.hash(fields, maxRecords, minRecords);
     }
 
     public Integer getMaxRecords() {

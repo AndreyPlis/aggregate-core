@@ -6,7 +6,7 @@ import java.util.*;
 
 public interface Context {
 
-    List<VariableDefinition> getVariableDefinitions();
+    List<VariableDefinition> getVariableDefinitions() throws CloneNotSupportedException;
 
     void setVariableDefinition(VariableDefinition vd);
 

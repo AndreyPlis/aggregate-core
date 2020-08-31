@@ -102,6 +102,14 @@ public abstract class FieldFormat<T> implements Cloneable {
     public FieldFormat clone() {
         try {
             FieldFormat ff = (FieldFormat) super.clone();
+            ff.setName(name);
+            ff.setHidden(hidden);
+            ff.setDefaultValue(defaultValue);
+            ff.setNullable(nullable);
+            ff.setDescription(description);
+            List<FieldValidator> validators = new ArrayList<>();
+            for(FieldValidator it: this.validators) validators.add(it);
+
             return ff;
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException("cannot clone", e);

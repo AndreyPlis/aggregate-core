@@ -32,4 +32,13 @@ public class VariableDefinition {
     public void setFormat(TableFormat format) {
         this.format = format;
     }
+
+    @Override
+    public VariableDefinition clone() throws CloneNotSupportedException {
+        VariableDefinition variableDefinition= (VariableDefinition) super.clone();
+        variableDefinition.format = format;
+        variableDefinition.name =name;
+        variableDefinition.writable = writable;
+        return  variableDefinition;
+    }
 }
