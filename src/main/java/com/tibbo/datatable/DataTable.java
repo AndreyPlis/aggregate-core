@@ -1,5 +1,7 @@
 package com.tibbo.datatable;
 
+import com.tibbo.datatable.field.FieldFormat;
+
 public interface DataTable {
 
     void addRecord(DataRecord dataRecord);

@@ -8,7 +8,7 @@ import java.util.regex.*;
 
 public class RegexValidator implements FieldValidator {
 
-    private String regex;
+    private final String regex;
 
     public RegexValidator(String regex) {
         this.regex = regex;

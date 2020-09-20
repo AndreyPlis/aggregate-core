@@ -15,26 +15,26 @@ public class DataRecord implements Cloneable {
     }
 
     public void setValue(String fieldName, Object value) {
-        FieldFormat ff = tableFormat.getField(fieldName);
+        FieldFormat<Object> ff = tableFormat.getField(fieldName);
         if (ff == null)
             throw new IllegalStateException("Field cannot find: " + fieldName);
         setData(ff, value);
     }
 
     public void setValue(int index, Object value) {
-        FieldFormat ff = findField(index);
+        FieldFormat<Object> ff = findField(index);
         if (ff == null)
             throw new IllegalStateException("Field cannot find: " + index);
         setData(findField(index), value);
     }
 
-    private void setData(FieldFormat ff, Object value) {
+    private void setData(FieldFormat<Object> ff, Object value) {
         ff.validate(value);
         data.put(ff.getName(), value);
     }
 
     public Object getValue(int index) {
-        FieldFormat ff = findField(index);
+        FieldFormat<Object> ff = findField(index);
         return getValue(ff.getName());
     }
 
@@ -42,7 +42,7 @@ public class DataRecord implements Cloneable {
         return data.get(fieldName);
     }
 
-    private FieldFormat findField(int index) {
+    private FieldFormat<Object> findField(int index) {
         return tableFormat.getField(index);
     }
 
