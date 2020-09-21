@@ -2,108 +2,64 @@ package com.tibbo.datatable.util;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MultiMap<K, V> {
-    List<Node<K, V>> multiMapList = new LinkedList<>();
-
-    private static class Node<K, V> {
-        private final K key;
-        private V value;
-
-        Node(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        public final K getKey() {
-            return key;
-        }
-
-        public final V getValue() {
-            return value;
-        }
-
-        public final String toString() {
-            return key + "=" + value;
-        }
-
-        public final int hashCode() {
-            return Objects.hashCode(key) ^ Objects.hashCode(value);
-        }
-
-        public final V setValue(V newValue) {
-            V oldValue = value;
-            value = newValue;
-            return oldValue;
-        }
-
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Node<?, ?> node = (Node<?, ?>) o;
-            return Objects.equals(key, node.key) &&
-                    Objects.equals(value, node.value);
-        }
-    }
-
-    private Node<K, V> getNode(K key, V value) {
-        Node<K, V> node = new Node<>(key, value);
-        if (multiMapList.contains(node)) {
-            for (Node<K, V> kvNode : multiMapList) {
-                if (kvNode.equals(node))
-                    return node;
-            }
-        }
-        return null;
-    }
+    Map<K, Map<V, Object>> multimap = new HashMap<>();
 
     public int size() {
-        return multiMapList.size();
+        return multimap.size();
     }
 
     public boolean isEmpty() {
-        return multiMapList.isEmpty();
-    }
-
-    public boolean containsKey(K key) {
-        for (Node<K, V> d : multiMapList) {
-            if (d.getKey().equals(key))
-                return true;
-        }
-        return false;
-    }
-
-    public boolean containsValue(V value) {
-        for (Node<K, V> d : multiMapList) {
-            if (d.getValue().equals(value))
-                return true;
-        }
-        return false;
-    }
-
-    public List<V> get(K key) {
-        List<V> res = new ArrayList<>();
-        if (containsKey(key))
-            for (Node<K, V> d : multiMapList) {
-                if (d.key.equals(key)) res.add(d.value);
-            }
-        return res;
-
+        return multimap.isEmpty();
     }
 
     public void put(K key, V value) {
-        multiMapList.add(new Node<>(key, value));
-    }
-
-    public boolean remove(K key, V value) {
-        if (getNode(key, value) != null) {
-            return multiMapList.remove(getNode(key, value));
+        if (multimap.containsKey(key)) {
+            multimap.get(key).put(value, null);
+        } else {
+            Map<V, Object> valueMap = new HashMap<>();
+            valueMap.put(value, null);
+            multimap.put(key, valueMap);
         }
-        return false;
+
     }
 
-    public void clear() {
-        multiMapList.clear();
+    public List<V> get(K key) {
+        return (containsKey(key)) ? new ArrayList<>(multimap.get(key).keySet()) : new ArrayList<>();
+    }
+
+    public boolean containsKey(K key) {
+        return multimap.containsKey(key);
+    }
+
+
+    public void putAll(Map<? extends K, ? extends V> map) {
+        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+            put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public List<V> remove(K key) {
+        return (containsKey(key)) ? new ArrayList<>(multimap.remove(key).keySet()) : new ArrayList<>();
+    }
+
+    public V remove(K key, V value) {
+        return (multimap.get(key).remove(value, null)) ? value : null;
+    }
+
+    public void removeAll() {
+        multimap.clear();
+    }
+
+
+    public boolean replace(K key, V oldValue, V newValue) {
+        if (oldValue == remove(key, oldValue)) {
+            put(key, newValue);
+            return true;
+        } else
+            return false;
     }
 
     @Override
@@ -111,24 +67,16 @@ public class MultiMap<K, V> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MultiMap<?, ?> multiMap = (MultiMap<?, ?>) o;
-        if (multiMapList.size() != multiMap.multiMapList.size())
-            return false;
-        for (int i = 0; i < multiMapList.size(); i++)
-            if (!multiMapList.get(i).equals(multiMap.multiMapList.get(i)))
-                return false;
-        return Objects.equals(multiMapList, multiMap.multiMapList);
+        return Objects.equals(multimap, multiMap.multimap);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(multiMapList);
+        return Objects.hash(multimap);
     }
 
     @Override
     public String toString() {
-        return "MultiMap{" +
-                "list=" + multiMapList +
-                '}';
+        return multimap.keySet().stream().map(e -> e + "=" + get(e) + "\n").collect(Collectors.joining());
     }
-
 }
