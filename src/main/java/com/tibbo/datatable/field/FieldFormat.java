@@ -65,11 +65,11 @@ public abstract class FieldFormat<T> implements Cloneable {
         validators.add(fieldValidator);
     }
 
-    public void setDefaultValue(T defaultValue) {
+    public  void setDefaultValue(T defaultValue) {
         this.defaultValue = defaultValue;
     }
 
-    public void validate(T value) {
+    public  void validate(Object value) {
         for (FieldValidator validator : validators) {
             try {
                 validator.validate(value);
@@ -99,9 +99,9 @@ public abstract class FieldFormat<T> implements Cloneable {
     }
 
     @Override
-    public FieldFormat clone() {
+    public FieldFormat<?> clone() {
         try {
-            FieldFormat ff = (FieldFormat) super.clone();
+            FieldFormat<?> ff = (FieldFormat<?>) super.clone();
             return ff;
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException("cannot clone", e);

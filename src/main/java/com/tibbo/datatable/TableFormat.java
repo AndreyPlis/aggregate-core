@@ -5,7 +5,7 @@ import com.tibbo.datatable.field.*;
 import java.util.*;
 
 public class TableFormat implements Cloneable {
-    private List<FieldFormat> fields = new ArrayList<>();
+    private List<FieldFormat<?>> fields = new ArrayList<>();
     private Map<String, Integer> fieldsLookup = null;
 
     private Integer minRecords;
@@ -19,8 +19,8 @@ public class TableFormat implements Cloneable {
         this.maxRecords = maxRecords;
     }
 
-    public TableFormat addField(FieldFormat fieldFormat) {
-        for (FieldFormat ff : fields)
+    public TableFormat addField(FieldFormat<?> fieldFormat) {
+        for (FieldFormat<?> ff : fields)
             if (ff.equals(fieldFormat))
                 throw new IllegalStateException("Find duplicate field: " + fieldFormat);
         fields.add(fieldFormat);
@@ -28,13 +28,13 @@ public class TableFormat implements Cloneable {
         return this;
     }
 
-    public FieldFormat getField(int index) {
+    public FieldFormat<?> getField(int index) {
         if (index < 0 || index >= fields.size())
             throw new IndexOutOfBoundsException("Index invalid");
         return fields.get(index);
     }
 
-    public FieldFormat getField(String name) {
+    public FieldFormat<?> getField(String name) {
         if (fieldsLookup == null) {
             fieldsLookup = new HashMap<>();
             for (int i = 0; i < getFieldCount(); i++) {
@@ -51,7 +51,7 @@ public class TableFormat implements Cloneable {
     }
 
 
-    public void removeField(FieldFormat fieldFormat) {
+    public void removeField(FieldFormat<?> fieldFormat) {
         if (fields.remove(fieldFormat))
             eraseFieldsLookup();
         else
@@ -62,8 +62,8 @@ public class TableFormat implements Cloneable {
     @Override
     protected TableFormat clone() throws CloneNotSupportedException {
         TableFormat clone = (TableFormat) super.clone();
-        ArrayList<FieldFormat> list = new ArrayList<>();
-        for (FieldFormat field : fields) list.add(field.clone());
+        ArrayList<FieldFormat<?>> list = new ArrayList<>();
+        for (FieldFormat<?> field : fields) list.add(field.clone());
         return clone;
     }
 
