@@ -10,8 +10,12 @@ public class StubContext implements Context{
     private List<VariableDefinition> variableDefinitions = new ArrayList<>();
 
     @Override
-    public List<VariableDefinition> getVariableDefinitions() {
-        return null; // do not return original array variableDefinitions
+    public List<VariableDefinition> getVariableDefinitions() throws CloneNotSupportedException {
+        List<VariableDefinition> newVariableDefinitions = new ArrayList<>();
+        for(VariableDefinition it: variableDefinitions){
+            newVariableDefinitions.add(it.clone());
+        }
+        return   newVariableDefinitions;
     }
 
     @Override

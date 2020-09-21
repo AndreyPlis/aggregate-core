@@ -4,7 +4,7 @@ import com.tibbo.datatable.field.*;
 
 import java.util.*;
 
-public class TableFormat implements Cloneable {
+public class TableFormat<T> implements Cloneable {
     private List<FieldFormat> fields = new ArrayList<>();
 
     private Integer minRecords;
@@ -18,14 +18,16 @@ public class TableFormat implements Cloneable {
         this.maxRecords = maxRecords;
     }
 
-    public TableFormat addField(FieldFormat fieldFormat) {
+    public TableFormat<T> addField(FieldFormat fieldFormat) {
         fields.add(fieldFormat);
         return this;
     }
 
-    public FieldFormat getField(int index) {
+    public FieldFormat<T> getField(int index) {
         return fields.get(index);
     }
+
+
 
     public boolean removeField(FieldFormat fieldFormat) {
         return fields.remove(fieldFormat);
@@ -33,9 +35,9 @@ public class TableFormat implements Cloneable {
 
 
     @Override
-    protected TableFormat clone() throws CloneNotSupportedException {
-        TableFormat clone = (TableFormat) super.clone();
-        ArrayList<FieldFormat> list = new ArrayList<>();
+    protected TableFormat<T> clone() throws CloneNotSupportedException {
+        TableFormat<T> clone = (TableFormat) super.clone();
+        ArrayList<FieldFormat<T>> list = new ArrayList<>();
         for (FieldFormat field : fields) list.add(field.clone());
         return clone;
     }
@@ -50,7 +52,7 @@ public class TableFormat implements Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(fields);
+        return Objects.hash(fields, maxRecords, minRecords);
     }
 
     public Integer getMaxRecords() {
