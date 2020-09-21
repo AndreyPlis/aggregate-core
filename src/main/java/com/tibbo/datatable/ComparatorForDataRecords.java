@@ -4,10 +4,10 @@ import com.tibbo.datatable.field.FieldFormat;
 
 import java.util.Comparator;
 
-public class ComparatorForDataRecords implements Comparator<DataRecord> {
-    private FieldFormat fieldFormat;
+public class ComparatorForDataRecords<T> implements Comparator<DataRecord> {
+    private FieldFormat<T> fieldFormat;
     private  Boolean desc;
-    public ComparatorForDataRecords(FieldFormat fieldFormat, boolean desc) {
+    public ComparatorForDataRecords(FieldFormat<T> fieldFormat, boolean desc) {
         this.fieldFormat= fieldFormat;
         this.desc = desc;
     }

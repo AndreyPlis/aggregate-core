@@ -4,7 +4,7 @@ import com.tibbo.datatable.field.*;
 
 import java.util.*;
 
-public class DataRecord {
+public class DataRecord<T> {
 
     private TableFormat tableFormat;
 
@@ -31,7 +31,7 @@ public class DataRecord {
         if(index < 0 || index >= data.size()){
             throw new ValidationException("index is not validate");
         }
-        FieldFormat ff = findField(index);
+        FieldFormat<T> ff = findField(index);
         return getValue(ff.getName());
     }
 
@@ -43,7 +43,7 @@ public class DataRecord {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DataRecord that = (DataRecord) o;
+        DataRecord<T> that = (DataRecord) o;
         return Objects.equals(tableFormat, that.tableFormat) &&
                 Objects.equals(data, that.data);
     }
@@ -54,8 +54,8 @@ public class DataRecord {
     }
 
     @Override
-    protected DataRecord clone() throws CloneNotSupportedException {
-        DataRecord  dt = (DataRecord) super.clone();
+    protected DataRecord<T> clone() throws CloneNotSupportedException {
+        DataRecord<T>  dt = (DataRecord) super.clone();
         dt.tableFormat = tableFormat.clone();
         Iterator<Map.Entry<String, Object>> itr = data.entrySet().iterator();
         dt.data.putAll(data);

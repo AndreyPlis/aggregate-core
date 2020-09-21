@@ -4,7 +4,7 @@ import com.tibbo.datatable.field.FieldFormat;
 
 import java.util.*;
 
-public class SimpleDataTable implements DataTable, Cloneable {
+public class SimpleDataTable<T> implements DataTable, Cloneable {
     private List<DataRecord> dataRecords = new ArrayList<>();
     private TableFormat tableFormat;
 
@@ -44,7 +44,7 @@ public class SimpleDataTable implements DataTable, Cloneable {
     }
 
     @Override
-    public DataRecord rec() {
+    public DataRecord<T> rec() {
         return null;
     }
 
@@ -54,7 +54,7 @@ public class SimpleDataTable implements DataTable, Cloneable {
     }
 
     @Override
-    public DataRecord getRecord(int index) throws ValidationException {
+    public DataRecord<T> getRecord(int index) throws ValidationException {
         if(index < 0 || index >= dataRecords.size()) {
             throw new ValidationException("index is not validate");
         }
@@ -103,20 +103,20 @@ public class SimpleDataTable implements DataTable, Cloneable {
 
     @Override
     public void sort(String fieldName, boolean desc) {
-        FieldFormat fieldFormat = null;
+        FieldFormat<T> fieldFormat = null;
         for(int i =0; i < tableFormat.getFieldCount(); i++) {
             if (tableFormat.getField(i).getName() == fieldName) {
                 fieldFormat = tableFormat.getField(i);
             }
         }
-        dataRecords.sort( new ComparatorForDataRecords(fieldFormat, desc));
+        dataRecords.sort( new ComparatorForDataRecords<T>(fieldFormat, desc));
     }
 
     @Override
     public DataTable filter(String fieldName, Object value) {
         if(value == null)   throw new NullPointerException("value is null");
-        SimpleDataTable myDataTable = new SimpleDataTable(tableFormat);
-        for(DataRecord it: dataRecords){
+        SimpleDataTable<T> myDataTable = new SimpleDataTable<T>(tableFormat);
+        for(DataRecord<T> it: dataRecords){
             if(it.getValue(fieldName) == value){
                 myDataTable.addRecord(it);
             }
@@ -128,10 +128,10 @@ public class SimpleDataTable implements DataTable, Cloneable {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        SimpleDataTable clone = (SimpleDataTable) super.clone();
+        SimpleDataTable<T> clone = (SimpleDataTable) super.clone();
         clone.tableFormat = tableFormat.clone();
-        ArrayList<DataRecord> list = new ArrayList<>();
-        for (DataRecord it : dataRecords) list.add((DataRecord) it.clone());
+        ArrayList<DataRecord<T>> list = new ArrayList<>();
+        for (DataRecord<T> it : dataRecords) list.add((DataRecord) it.clone());
         return clone;
     }
 
