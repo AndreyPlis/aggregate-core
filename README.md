@@ -9,3 +9,5 @@
 2.2 Equals HashCode, clone in DataTable.
 2.3 Implement tests in DataTableTest.
 3.3 Implement StubContext
+
+4.1 Fix generics in LimitsValidator and FieldFormatFactory. 
