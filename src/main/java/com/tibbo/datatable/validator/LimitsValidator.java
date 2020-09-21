@@ -5,16 +5,16 @@ import com.tibbo.datatable.*;
 import java.text.*;
 import java.util.*;
 
-public class LimitsValidator implements FieldValidator {
+public class LimitsValidator<T> implements FieldValidator<T> {
 
-    private Comparable min;
-    private Comparable max;
+    private Comparable<T> min;
+    private Comparable<T> max;
 
-    public LimitsValidator(Comparable min, Comparable max) {
+    public LimitsValidator(Comparable<T> min, Comparable<T> max) {
         setLimits(min, max);
     }
 
-    protected void setLimits(Comparable min, Comparable max) {
+    protected void setLimits(Comparable<T> min, Comparable<T> max) {
         if (min != null && max != null && !min.getClass().equals(max.getClass()))
             throw new IllegalStateException("'min' and 'max' Limits Validator parameters should be the same type");
 
@@ -34,7 +34,7 @@ public class LimitsValidator implements FieldValidator {
                 throw new ValidationException("Value not comparable: " + value);
             }
 
-            Comparable cv = (Comparable) value;
+            Comparable<T> cv = (Comparable<T>) value;
 
             compare(cv);
         }
@@ -62,7 +62,7 @@ public class LimitsValidator implements FieldValidator {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LimitsValidator that = (LimitsValidator) o;
+        LimitsValidator<T> that = (LimitsValidator<T>) o;
         return Objects.equals(min, that.min) &&
                 Objects.equals(max, that.max);
     }

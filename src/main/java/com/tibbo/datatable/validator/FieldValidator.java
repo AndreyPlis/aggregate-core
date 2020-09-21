@@ -2,7 +2,7 @@ package com.tibbo.datatable.validator;
 
 import com.tibbo.datatable.*;
 
-public interface FieldValidator {
+public interface FieldValidator<T> {
 
     char VALIDATOR_LIMITS = 'L';
     char VALIDATOR_REGEX = 'R';

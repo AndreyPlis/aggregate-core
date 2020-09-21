@@ -16,7 +16,7 @@ public abstract class FieldFormat<T> implements Cloneable {
     private Boolean nullable;
     private Boolean hidden;
     private T defaultValue;
-    private List<FieldValidator> validators = new ArrayList<>();
+    private List<FieldValidator<T>> validators = new ArrayList<>();
 
 
     public abstract String valueToString(T value);
@@ -61,7 +61,7 @@ public abstract class FieldFormat<T> implements Cloneable {
         return defaultValue;
     }
 
-    public void addValidator(FieldValidator fieldValidator) {
+    public void addValidator(FieldValidator<T> fieldValidator) {
         validators.add(fieldValidator);
     }
 
@@ -70,7 +70,7 @@ public abstract class FieldFormat<T> implements Cloneable {
     }
 
     public void validate(T value) {
-        for (FieldValidator validator : validators) {
+        for (FieldValidator<T> validator : validators) {
             try {
                 validator.validate(value);
             } catch (ValidationException e) {
@@ -99,9 +99,9 @@ public abstract class FieldFormat<T> implements Cloneable {
     }
 
     @Override
-    public FieldFormat clone() {
+    public FieldFormat<T> clone() {
         try {
-            FieldFormat ff = (FieldFormat) super.clone();
+            FieldFormat<T> ff = (FieldFormat<T>) super.clone();
             return ff;
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException("cannot clone", e);

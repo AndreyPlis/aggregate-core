@@ -3,7 +3,7 @@ package com.tibbo.datatable.field;
 public class FieldFormatFactory {
 
 
-    public static <T> FieldFormat<T> createFieldFormat(Character type, String name, String description, Boolean hidden, T defaultValue) {
+    public static <T> FieldFormat createFieldFormat(Character type, String name, String description, Boolean hidden, T defaultValue) {
         FieldFormat ff = createFieldFormat(type, name,description, hidden);
         ff.setDefaultValue(defaultValue);
         return ff;
