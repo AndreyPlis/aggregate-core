@@ -8,9 +8,9 @@ public interface Context {
 
     List<VariableDefinition> getVariableDefinitions();
 
-    void setVariableDefinition(VariableDefinition vd);
+    void addVariableDefinition(VariableDefinition vd);
 
-    VariableDefinition getVariableDefinition();
+    Optional<VariableDefinition> getVariableDefinition(String name);
 
     DataTable getVariable(String name);
 
