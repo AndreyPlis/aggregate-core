@@ -2,15 +2,15 @@ package com.tibbo.datatable.field;
 
 import com.tibbo.datatable.field.*;
 
-public class IntFieldFormat extends FieldFormat<Integer> {
+public class IntFieldFormat<T> extends FieldFormat<T> {
 
     @Override
-    public String valueToString(Integer value) {
+    public String valueToString(T value) {
         return value.toString();
     }
 
     @Override
-    public Integer valueFromString(String value) {
+    public Object valueFromString(String value) {
         return Integer.parseInt(value);
     }
 

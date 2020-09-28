@@ -21,7 +21,7 @@ public abstract class FieldFormat<T> implements Cloneable {
 
     public abstract String valueToString(T value);
 
-    public abstract T valueFromString(String value);
+    public abstract Object valueFromString(String value);
 
     public String getName() {
         return name;

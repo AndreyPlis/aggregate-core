@@ -2,16 +2,16 @@ package com.tibbo.datatable.field;
 
 import com.tibbo.datatable.field.*;
 
-public class StringFieldFormat extends FieldFormat<String> {
+public class StringFieldFormat<T> extends FieldFormat<T> {
 
 
     @Override
-    public String valueToString(String value) {
-        return value;
+    public String valueToString(T value) {
+        return value.toString( );
     }
 
     @Override
-    public String valueFromString(String value) {
+    public Object valueFromString(String value) {
         return value;
     }
 

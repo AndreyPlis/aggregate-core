@@ -1,13 +1,13 @@
 package com.tibbo.datatable.field;
 
-public class BooleanFieldFormat extends FieldFormat<Boolean> {
+public class BooleanFieldFormat<T> extends FieldFormat<T> {
     @Override
-    public String valueToString(Boolean value) {
+    public String valueToString(T value) {
         return value.toString();
     }
 
     @Override
-    public Boolean valueFromString(String value) {
+    public Object valueFromString(String value) {
         return Boolean.valueOf(value);
     }
 

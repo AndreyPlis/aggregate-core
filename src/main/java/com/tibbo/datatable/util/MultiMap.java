@@ -8,12 +8,8 @@ import java.util.*;
 
 public class MultiMap<K,V> implements Cloneable, Serializable {
 
-    public List<K> keys() {
-        List<K> list = new LinkedList<K>();
-        table.forEach(p -> {
-            if(!list.contains(p.key))list.add( p.key );
-        });
-        return list;
+    public Set<K> keys() {
+        return table.keySet( );
     }
 
     @Override
@@ -29,34 +25,7 @@ public class MultiMap<K,V> implements Cloneable, Serializable {
         return Objects.hash(table);
     }
 
-    static class Pair<K, V> {
-        K key;
-        V value;
-        Pair( K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-        public final K getKey()        { return key; }
-        public final V getValue()      { return value; }
-        public final String toString() { return key + "=" + value; }
-        public final V setValue(V newValue) {
-            V oldValue = value;
-            value = newValue;
-            return oldValue;
-        }
-        public final boolean equals(Object o) {
-            if (o == this)
-                return true;
-            if (o instanceof Pair) {
-                Pair<?,?> e = (Pair<?,?>)o;
-                if (Objects.equals(key, e.getKey()) && Objects.equals(value, e.getValue()))
-                    return true;
-            }
-            return false;
-        }
-    }
-
-    transient LinkedList<Pair<K,V>> table = new LinkedList<>();
+    transient Map<K,Set<V>> table = new HashMap<>();
 
     public int size() {
         return table.size();
@@ -66,25 +35,27 @@ public class MultiMap<K,V> implements Cloneable, Serializable {
         return table.isEmpty();
     }
 
-    public List<V> get(Object key) {
-        List<V> list = new LinkedList<V>();
-        table.forEach( p -> {
-            if( key.equals( p.key ) ) list.add( p.value );
-        } );
-        return list;
+    public Set<V> get(K key) {
+        return table.get( key );
     }
 
     public V put(K key, V value) {
-        Pair<K,V> pair = new Pair<K,V>(key,value);
-        table.add(pair);
+        if( !table.containsKey( key ) ) {
+            Set<V> var = new HashSet<>();
+            var.add(value);
+            table.put(key, var);
+        }else {
+            if (table.get(key).contains(value)) return null;
+            table.get(key).add(value);
+        }
         return value;
     }
 
-    public void putAll(List<Pair<K,V>> lists) {
-        table.addAll(lists);
+    public void putAll(Map<K,Set<V>> lists) {
+        table.putAll( lists );
     }
 
     public void remove(K key) {
-        table.removeIf( f -> f.key.equals(key));
+        table.remove( key );
     }
 }

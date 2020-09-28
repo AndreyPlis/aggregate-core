@@ -1,8 +1,10 @@
 import com.tibbo.datatable.util.MultiMap;
 import org.junit.*;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +23,7 @@ public class MultiMapTest {
         test2.put("1",26);
         test2.put("2",6);
         test2.put("2",1);
-        assertEquals( true, test.equals( test2 ) );
+        assertEquals( true, test.equals(test2));
     }
     @Test
     public void getMultiMap() {
@@ -30,7 +32,7 @@ public class MultiMapTest {
         test.put("1",55);
         test.put("2",26);
         test.put("2",1);
-        List<Integer> get = new LinkedList<>();
+        Set<Integer> get = new HashSet<>();
         get.add( 26 );
         get.add( 1 );
         assertEquals(get, test.get( "2" ) );
