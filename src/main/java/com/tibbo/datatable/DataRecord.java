@@ -14,27 +14,32 @@ public class DataRecord implements Cloneable {
         this.tableFormat = tableFormat;
     }
 
-    public void setValue(String fieldName, Object value) {
-        FieldFormat ff = tableFormat.getField(fieldName);
+    public <T extends Comparable<T>> void setValue(String fieldName, Object value) {
+        FieldFormat<T> ff = tableFormat.getField(fieldName);
         if (ff == null)
             throw new IllegalStateException("Field cannot find: " + fieldName);
         setData(ff, value);
     }
 
-    public void setValue(int index, Object value) {
-        FieldFormat ff = findField(index);
+    public <T extends Comparable<T>> void setValue(int index, Object value) {
+        FieldFormat<T> ff = findField(index);
         if (ff == null)
             throw new IllegalStateException("Field cannot find: " + index);
-        setData(findField(index), value);
+        setData(ff, value);
     }
 
-    private void setData(FieldFormat ff, Object value) {
-        ff.validate(value);
+    private  <T extends Comparable<T>> void setData(FieldFormat<T> ff, Object value) {
+        try {
+            ff.validate((T)value);
+        } catch (ClassCastException e){
+            throw new ClassCastException("invalid type conversion");
+        }
+
         data.put(ff.getName(), value);
     }
 
-    public Object getValue(int index) {
-        FieldFormat ff = findField(index);
+    public <T extends Comparable<T>> Object getValue(int index) {
+        FieldFormat<T> ff = findField(index);
         return getValue(ff.getName());
     }
 
@@ -42,7 +47,7 @@ public class DataRecord implements Cloneable {
         return data.get(fieldName);
     }
 
-    private FieldFormat findField(int index) {
+    private  <T extends Comparable<T>> FieldFormat<T> findField(int index) {
         return tableFormat.getField(index);
     }
 

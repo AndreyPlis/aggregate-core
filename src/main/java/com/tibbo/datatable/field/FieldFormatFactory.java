@@ -4,24 +4,24 @@ public class FieldFormatFactory {
 
 
     public static <T> FieldFormat<T> createFieldFormat(Character type, String name, String description, Boolean hidden, T defaultValue) {
-        FieldFormat ff = createFieldFormat(type, name,description, hidden);
+        FieldFormat<T> ff = createFieldFormat(type, name,description, hidden);
         ff.setDefaultValue(defaultValue);
         return ff;
     }
 
-    public static FieldFormat createFieldFormat(Character type, String name, String description, Boolean hidden) {
-        FieldFormat ff = createFieldFormat(type, name,description);
+    public static <T> FieldFormat<T> createFieldFormat(Character type, String name, String description, Boolean hidden) {
+        FieldFormat<T> ff = createFieldFormat(type, name,description);
         ff.setHidden(hidden);
         return ff;
     }
 
-    public static FieldFormat createFieldFormat(Character type, String name, String description) {
-        FieldFormat ff = createFieldFormat(type, name);
+    public static <T> FieldFormat<T> createFieldFormat(Character type, String name, String description) {
+        FieldFormat<T> ff = createFieldFormat(type, name);
         ff.setDescription(description);
         return ff;
     }
 
-    public static FieldFormat createFieldFormat(Character type, String name){
+    public static <T> FieldFormat<T> createFieldFormat(Character type, String name){
         FieldFormat ff;
         if (type == FieldFormat.STRING_FIELD)
             ff = new StringFieldFormat();

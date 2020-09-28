@@ -14,13 +14,13 @@ public class TableFormat implements Cloneable {
     public TableFormat() {
     }
 
-    public TableFormat(Integer minRecords, Integer maxRecords) {
+    public  TableFormat(Integer minRecords, Integer maxRecords) {
         this.minRecords = minRecords;
         this.maxRecords = maxRecords;
     }
 
-    public TableFormat addField(FieldFormat fieldFormat) {
-        for (FieldFormat ff : fields)
+    public <T extends Comparable<T>> TableFormat addField(FieldFormat<T> fieldFormat) {
+        for (FieldFormat<T> ff : fields)
             if (ff.equals(fieldFormat))
                 throw new IllegalStateException("Find duplicate field: " + fieldFormat);
         fields.add(fieldFormat);
@@ -28,13 +28,13 @@ public class TableFormat implements Cloneable {
         return this;
     }
 
-    public FieldFormat getField(int index) {
+    public <T extends Comparable<T>> FieldFormat<T> getField(int index) {
         if (index < 0 || index >= fields.size())
             throw new IndexOutOfBoundsException("Index invalid");
         return fields.get(index);
     }
 
-    public FieldFormat getField(String name) {
+    public <T extends Comparable<T>> FieldFormat<T> getField(String name) {
         if (fieldsLookup == null) {
             fieldsLookup = new HashMap<>();
             for (int i = 0; i < getFieldCount(); i++) {
@@ -51,7 +51,7 @@ public class TableFormat implements Cloneable {
     }
 
 
-    public void removeField(FieldFormat fieldFormat) {
+    public <T extends Comparable<T>> void removeField(FieldFormat<T> fieldFormat) {
         if (fields.remove(fieldFormat))
             eraseFieldsLookup();
         else
