@@ -1,4 +1,4 @@
-import com.tibbo.datatable.Multimap;
+import com.tibbo.datatable.MultiMap;
 import com.tibbo.datatable.field.FieldFormat;
 import junit.framework.TestCase;
 
@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class MultimapTest extends TestCase {
 
     public void testGet() {
-        Multimap<Integer, String> multimap = new Multimap<>();
+        MultiMap<Integer, String> multimap = new MultiMap<>();
         multimap.put(1, "a");
         multimap.put(2, "b");
         multimap.put(3, "c");
@@ -24,7 +24,7 @@ public class MultimapTest extends TestCase {
     }
 
     public void testRemoveForKey() {
-        Multimap<Integer, String> multimap = new Multimap<>();
+        MultiMap<Integer, String> multimap = new MultiMap<>();
         multimap.put(1, "a");
         multimap.put(2, "b");
         multimap.put(3, "c");
@@ -42,7 +42,7 @@ public class MultimapTest extends TestCase {
 
 
     public void testPutAllItTheList() {
-        Multimap<Integer, String> multimap = new Multimap<>();
+        MultiMap<Integer, String> multimap = new MultiMap<>();
         multimap.put(1, "a");
         multimap.put(2, "b");
         multimap.put(3, "c");
