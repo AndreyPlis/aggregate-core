@@ -14,8 +14,8 @@ public class Producers<T> implements Runnable {
 
     @Override
     public void run() {
-        for(int i=0;i<12;i++) {
-            queue.put(list.get(random.nextInt(9)));
+        for(int i=0;i<2;i++) {
+            queue.put(list.get(0));
         }
     }
 }

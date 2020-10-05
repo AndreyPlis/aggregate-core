@@ -1,16 +1,24 @@
 import com.tibbo.datatable.util.BlockingQueue;
+import com.tibbo.datatable.util.Consumers;
+import com.tibbo.datatable.util.Producers;
 import org.junit.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class BlockingQueueTest {
 
-    @Test()
+    @Test(expected = NullPointerException.class)
     public void add() {
         BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
         blockingQueue.add(15);
         blockingQueue.add(17);
         assertEquals("[15, 17]", blockingQueue.toString());
+        blockingQueue.add(null);
+
     }
 
     @Test()
@@ -58,4 +66,51 @@ public class BlockingQueueTest {
         assertEquals("[15, 17]", blockingQueue.toString());
     }
 
+    @Test
+    public void take() {
+        BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
+        List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        Producers<Integer> prod = new Producers<>(blockingQueue, list);
+        Consumers<Integer> cons = new Consumers<>(blockingQueue, list);
+        Thread producers = new Thread(prod, "producersOne");
+        Thread consumers = new Thread(cons, "consumersOne");
+
+        consumers.start();
+        producers.start();
+
+        try {
+            producers.join();
+            consumers.join();
+        } catch (
+                InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals("[]", blockingQueue.toString());
+    }
+
+    @Test
+    public void put(){
+        BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
+        List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        Producers<Integer> prod = new Producers<>(blockingQueue, list);
+        Consumers<Integer> cons = new Consumers<>(blockingQueue, list);
+        Thread producers = new Thread(prod, "producersOne");
+        Thread consumers = new Thread(cons, "consumersOne");
+        blockingQueue.setCapacity(4);
+        blockingQueue.add(10);
+        blockingQueue.add(11);
+        blockingQueue.add(12);
+        blockingQueue.add(13);
+        producers.start();
+        consumers.start();
+
+        try {
+            producers.join();
+            consumers.join();
+        } catch (
+                InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals("[12, 13, 1, 1]", blockingQueue.toString());
+    }
 }
