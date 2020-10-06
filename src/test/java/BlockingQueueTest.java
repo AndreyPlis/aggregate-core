@@ -6,6 +6,9 @@ import org.junit.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.*;
 
@@ -113,4 +116,22 @@ public class BlockingQueueTest {
         }
         assertEquals("[12, 13, 1, 1]", blockingQueue.toString());
     }
+
+
+    @Test
+    public void queue() throws ExecutionException, InterruptedException {
+        BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
+        List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        Producers<Integer> prod = new Producers<>(blockingQueue, list);
+        Consumers<Integer> cons = new Consumers<>(blockingQueue, list);
+        CompletableFuture<Void> producer = CompletableFuture.runAsync(prod);
+        CompletableFuture<Void> consumer = CompletableFuture.runAsync(cons);
+        blockingQueue.setCapacity(2);
+        blockingQueue.add(7);
+        CompletableFuture.allOf(producer,consumer).thenAccept(v->{
+            assertEquals("[1]",blockingQueue.toString());
+            assertNotEquals("[2]",blockingQueue.toString());
+        }).get();
+    }
+
 }
