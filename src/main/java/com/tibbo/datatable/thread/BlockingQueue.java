@@ -38,7 +38,7 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
     }
 
     @Override
-    public void put(T value) throws InterruptedException {
+    public synchronized void put(T value) throws InterruptedException {
         if (value == null)
             throw new NullPointerException("The element cannot be null");
         lock.lock();
@@ -75,7 +75,7 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
     }
 
     @Override
-    public T take() {
+    public synchronized T take() {
         T result = null;
         lock.lock();
         try {
@@ -187,7 +187,7 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
         return 0;
     }
 
-    public int getMaxCap() {
+    public int  getMaxCap() {
         return maxCap;
     }
 
