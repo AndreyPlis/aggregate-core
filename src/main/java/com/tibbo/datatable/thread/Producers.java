@@ -16,7 +16,11 @@ public class Producers<T> implements Runnable {
     @Override
     public void run() {
         for(int i=0;i<2;i++) {
-            queue.put(list.get(0));
+            try {
+                queue.put(list.get(0));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
