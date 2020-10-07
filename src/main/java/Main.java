@@ -6,59 +6,37 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-
-        Increment increment = new Increment();
-
-
-        Runnable inc = increment::increment;
-        Runnable dec = increment::notifyCustom;
-        System.out.println("start static");
-
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                increment.customWait();
-            }
-        };
-
-        Runnable r2 = new Runnable() {
-            @Override
-            public void run() {
+        ProducerConsumer<Integer> producerConsumer = new ProducerConsumer<>();
+        Runnable producer = () -> {
+            for ( int i = 0; i < 10; ++i ) {
                 try {
-                    Thread.sleep(2000);
+                    producerConsumer.produce( i );
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-               // increment.notifyCustom();
             }
         };
+        Runnable consumer = () -> {
+            for ( int i = 0; i < 10; ++i ) {
+                try {
+                    producerConsumer.consume();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread prdcr = new Thread(producer, "produce");
+        prdcr.start();
 
-
-        Thread t3 = new Thread(r, "static task");
-        t3.start();
-
-     /*   Thread t2 = new Thread(inc, "increment");
-        t2.start();*/
-
-      /*  */
-
-        Thread t1 = new Thread(r2, "decrement");
-        t1.start();
-
-
+        Thread cnsmr = new Thread(consumer, "consume");
+        cnsmr.start();
 
         try {
-            t1.join();
+            prdcr.join();
+            cnsmr.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println("finish");
-
-
-
-
-
     }
-
-
 }
