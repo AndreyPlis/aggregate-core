@@ -6,11 +6,11 @@ import org.junit.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.*;
 
 import static org.junit.Assert.*;
+
+
 
 public class BlockingQueueTest {
 
@@ -88,11 +88,11 @@ public class BlockingQueueTest {
                 InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals("[]", blockingQueue.toString());
+        assertEquals("[1]", blockingQueue.toString());
     }
 
     @Test
-    public void put(){
+    public void put() {
         BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         Producers<Integer> prod = new Producers<>(blockingQueue, list);
@@ -103,7 +103,6 @@ public class BlockingQueueTest {
         blockingQueue.add(10);
         blockingQueue.add(11);
         blockingQueue.add(12);
-        blockingQueue.add(13);
         producers.start();
         consumers.start();
 
@@ -114,12 +113,12 @@ public class BlockingQueueTest {
                 InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals("[12, 13, 1, 1]", blockingQueue.toString());
+        assertEquals("[12, 1, 1, 1]", blockingQueue.toString());
     }
 
 
-    @Test
-    public void queue() throws ExecutionException, InterruptedException {
+    @Test(timeout = 100)
+    public void queueTest1() throws ExecutionException, InterruptedException {
         BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         Producers<Integer> prod = new Producers<>(blockingQueue, list);
@@ -128,10 +127,32 @@ public class BlockingQueueTest {
         CompletableFuture<Void> consumer = CompletableFuture.runAsync(cons);
         blockingQueue.setCapacity(2);
         blockingQueue.add(7);
-        CompletableFuture.allOf(producer,consumer).thenAccept(v->{
-            assertEquals("[1]",blockingQueue.toString());
-            assertNotEquals("[2]",blockingQueue.toString());
-        }).get();
+        CompletableFuture.allOf(producer, consumer).thenAccept(v -> {
+            assertEquals("[1, 1]", blockingQueue.toString());
+            assertNotEquals("[2]", blockingQueue.toString());
+        }).join();
+
     }
 
+    @Test(timeout = 100)
+    public void queueTest2() {
+        BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
+        List<Integer> list = new ArrayList<>(Arrays.asList(3, 2, 3, 4));
+        blockingQueue.setCapacity(2);
+        blockingQueue.add(7);
+        ThreadPoolExecutor pool = new ThreadPoolExecutor(4, 4, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10));
+        Producers<Integer> prod = new Producers<>(blockingQueue, list);
+        Consumers<Integer> cons = new Consumers<>(blockingQueue, list);
+        Future<?> futureProducers = pool.submit(prod);
+        Future<?> futureConsumers = pool.submit(cons);
+        try {
+            futureConsumers.get();
+            futureProducers.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        pool.shutdown();
+
+        assertEquals("[3, 3]", blockingQueue.toString());
+    }
 }

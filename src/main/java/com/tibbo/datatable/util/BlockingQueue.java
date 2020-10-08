@@ -11,8 +11,8 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
     private List<T> queue = new ArrayList<>();
     private int capacity = 10;
     Lock lock = new ReentrantLock();
-    Condition conditionPut = lock.newCondition();
-    Condition conditionTake = lock.newCondition();
+    Condition isFull = lock.newCondition();
+    Condition isEmpty = lock.newCondition();
 
     public int getCapacity() {
         return capacity;
@@ -23,22 +23,34 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
     }
 
     @Override
-    public synchronized boolean add(T value) {
-        if (value == null)
-            throw new NullPointerException("The element must not be null");
-        if (queue.size() < capacity)
-            return queue.add(value);
-        else
-            throw new IllegalStateException("No space is currently available");
+    public boolean add(T value) {
+        lock.lock();
+        try {
+            if (value == null)
+                throw new NullPointerException("The element must not be null");
+            if (queue.size() < capacity)
+                return queue.add(value);
+            else
+                throw new IllegalStateException("No space is currently available");
+        } finally {
+            lock.unlock();
+        }
+
     }
 
     @Override
-    public synchronized boolean offer(T value) {
-        if (value == null)
-            throw new NullPointerException("The element must not be null");
-        if (queue.size() >= capacity) return false;
-        queue.add(value);
-        return true;
+    public boolean offer(T value) {
+        lock.lock();
+        try {
+            if (value == null)
+                throw new NullPointerException("The element must not be null");
+            if (queue.size() >= capacity) return false;
+            queue.add(value);
+            return true;
+        } finally {
+            lock.unlock();
+        }
+
     }
 
     @Override
@@ -48,10 +60,10 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
         lock.lock();
         try {
             if (queue.size() >= capacity) {
-                conditionPut.await();
+                isFull.await();
             }
             queue.add(value);
-            conditionTake.signal();
+            isEmpty.signal();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -60,21 +72,31 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
     }
 
     @Override
-    public synchronized T remove() {
-        if (queue.size() == 0)
-            throw new NoSuchElementException("Collection is empty");
-        return queue.remove(0);
+    public T remove() {
+        lock.lock();
+        try {
+            if (queue.size() == 0)
+                throw new NoSuchElementException("Collection is empty");
+            return queue.remove(0);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
-    public synchronized boolean remove(Object o) {
-        if (o == null)
-            throw new NullPointerException("The element must not be null");
-        return queue.remove(o);
+    public boolean remove(Object o) {
+        lock.lock();
+        try {
+            if (o == null)
+                throw new NullPointerException("The element must not be null");
+            return queue.remove(o);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
-    public synchronized boolean offer(Object o, long timeout, TimeUnit unit)  {
+    public synchronized boolean offer(Object o, long timeout, TimeUnit unit) throws InterruptedException {
         return false;
     }
 
@@ -84,10 +106,10 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
         lock.lock();
         try {
             if (queue.size() < 1) {
-                conditionTake.await();
+                isEmpty.await();
             }
             result = queue.remove(0);
-            conditionPut.signal();
+            isFull.signal();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -97,41 +119,71 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
     }
 
     @Override
-    public synchronized T poll(long timeout, TimeUnit unit)  {
+    public synchronized T poll(long timeout, TimeUnit unit) throws InterruptedException {
         return null;
     }
 
     @Override
-    public synchronized T poll() {
-        return (queue.size() != 0) ? queue.remove(0) : null;
+    public T poll() {
+        lock.lock();
+        try {
+            return (queue.size() != 0) ? queue.remove(0) : null;
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
-    public synchronized int remainingCapacity() {
-        return capacity - queue.size();
+    public int remainingCapacity() {
+        lock.lock();
+        try {
+            return capacity - queue.size();
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
-    public synchronized T element() {
-        if (queue.size() != 0)
-            return queue.get(0);
-        else
-            throw new NoSuchElementException();
+    public T element() {
+        lock.lock();
+        try {
+            if (queue.size() != 0)
+                return queue.get(0);
+            else
+                throw new NoSuchElementException();
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
-    public synchronized T peek() {
-        return (queue.size() != 0) ? queue.get(0) : null;
+    public T peek() {
+        lock.lock();
+        try {
+            return (queue.size() != 0) ? queue.get(0) : null;
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
-    public synchronized int size() {
-        return queue.size();
+    public int size() {
+        lock.lock();
+        try {
+            return queue.size();
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
-    public synchronized boolean isEmpty() {
-        return queue.isEmpty();
+    public boolean isEmpty() {
+        lock.lock();
+        try {
+            return queue.isEmpty();
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
@@ -140,8 +192,13 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
     }
 
     @Override
-    public synchronized void clear() {
-        queue.clear();
+    public void clear() {
+        lock.lock();
+        try {
+            queue.clear();
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
@@ -160,8 +217,13 @@ public class BlockingQueue<T> implements java.util.concurrent.BlockingQueue<T> {
     }
 
     @Override
-    public synchronized boolean contains(Object o) {
-        return queue.contains(o);
+    public boolean contains(Object o) {
+        lock.lock();
+        try {
+            return queue.contains(o);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
