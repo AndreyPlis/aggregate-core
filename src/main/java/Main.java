@@ -1,32 +1,48 @@
 import com.tibbo.datatable.*;
+import com.tibbo.datatable.concurrency.*;
 
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Map<String, Integer> data = new HashMap<>();
+        ThreadPoolExecutor pool = new ThreadPoolExecutor(2, 4, 60, TimeUnit.SECONDS, /*стандартная очередь*/ new ArrayBlockingQueue<Runnable>(100));
 
-        data.put("foo",1);
-        data.put("foo2", 2);
-        data.put("foo3",3);
-        data.put("foo",4);
-        System.out.println(data);
+        System.out.println("start " );
 
-        if(data.containsKey("foo24")) {
-            System.out.println(data.get("foo24"));
-        }
-        data.forEach((k,v) -> System.out.println(k + " " + v));
-        Integer v = data.remove("foo");
-        if(v != null)
-            System.out.println(v);
-        System.out.println("----------------------------------");
-
-        for(Map.Entry<String,Integer> entry: data.entrySet())
+        Future f = pool.submit(new Callable<Integer>()
         {
-            System.out.println(entry.getKey() + " " + entry.getValue());
+            @Override
+            public Integer call() throws Exception {
+               /* try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }*/
+                return 100;
+            }
+        });
+
+        try {
+            System.out.println("result " + f.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
+
+        for(int i = 0; i < 15; i++)
+        pool.execute(() -> {
+            /*работа со совей очередью*/
+            System.out.println(pool.getCompletedTaskCount() + " active ");
+        });
+
+
+        pool.shutdown();
 
     }
+
 }

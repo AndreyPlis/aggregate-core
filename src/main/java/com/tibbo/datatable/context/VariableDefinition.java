@@ -2,6 +2,8 @@ package com.tibbo.datatable.context;
 
 import com.tibbo.datatable.*;
 
+import java.util.*;
+
 public class VariableDefinition {
 
     private String name;
@@ -31,5 +33,21 @@ public class VariableDefinition {
 
     public void setFormat(TableFormat format) {
         this.format = format;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VariableDefinition that = (VariableDefinition) o;
+        return writable == that.writable &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(format, that.format);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, writable, format);
     }
 }
