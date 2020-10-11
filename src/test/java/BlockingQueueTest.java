@@ -6,10 +6,10 @@ import org.junit.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.*;
 
 import static org.junit.Assert.*;
-
 
 
 public class BlockingQueueTest {
@@ -152,7 +152,53 @@ public class BlockingQueueTest {
             e.printStackTrace();
         }
         pool.shutdown();
-
         assertEquals("[3, 3]", blockingQueue.toString());
+    }
+
+    @Test(timeout = 100)
+    public void threadSafeAdd() {
+        BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
+        blockingQueue.setCapacity(100);
+        Random random = new Random();
+        CountDownLatch latchThread = new CountDownLatch(1);
+        CountDownLatch latchAssert = new CountDownLatch(100);
+        Runnable addValue = () -> {
+            try {
+                latchThread.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            blockingQueue.add(random.nextInt());
+            latchAssert.countDown();
+        };
+        ExecutorService executorService = Executors.newFixedThreadPool(100);
+        for (int i = 0; i < 100; i++) {
+            executorService.execute(addValue);
+        }
+        latchThread.countDown();
+        try {
+            latchAssert.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        executorService.shutdown();
+        assertEquals(100, blockingQueue.size());
+    }
+
+    @Test
+    public void testTakeBlocksWhenEmpty() {
+        BlockingQueue<Integer> blockingQueue = new BlockingQueue<>();
+        Runnable runnable = () -> {
+            blockingQueue.take();
+            fail();
+        };
+        try {
+            Thread thread = new Thread(runnable);
+            thread.start();
+            thread.interrupt();
+            thread.join();
+        } catch (Exception unexpected) {
+            fail();
+        }
     }
 }
