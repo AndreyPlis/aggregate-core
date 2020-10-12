@@ -11,6 +11,7 @@ public class StringFieldFormat extends FieldFormat<String> {
     }
 
     @Override
+
     public String valueFromString(String value) {
         return value;
     }

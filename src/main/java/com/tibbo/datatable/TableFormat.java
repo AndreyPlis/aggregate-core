@@ -19,6 +19,7 @@ public class TableFormat implements Cloneable {
         this.maxRecords = maxRecords;
     }
 
+
     public TableFormat addField(FieldFormat fieldFormat) {
         for (FieldFormat ff : fields)
             if (ff.equals(fieldFormat))
