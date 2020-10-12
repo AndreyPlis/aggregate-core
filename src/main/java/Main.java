@@ -2,63 +2,47 @@ import com.tibbo.datatable.*;
 import com.tibbo.datatable.concurrency.*;
 
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Increment increment = new Increment();
+        ThreadPoolExecutor pool = new ThreadPoolExecutor(2, 4, 60, TimeUnit.SECONDS, /*стандартная очередь*/ new ArrayBlockingQueue<Runnable>(100));
 
+        System.out.println("start " );
 
-        Runnable inc = increment::increment;
-        Runnable dec = increment::notifyCustom;
-        System.out.println("start static");
-
-        Runnable r = new Runnable() {
+        Future f = pool.submit(new Callable<Integer>()
+        {
             @Override
-            public void run() {
-                increment.customWait();
-            }
-        };
-
-        Runnable r2 = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
+            public Integer call() throws Exception {
+               /* try {
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
-               // increment.notifyCustom();
+                }*/
+                return 100;
             }
-        };
-
-
-        Thread t3 = new Thread(r, "static task");
-        t3.start();
-
-     /*   Thread t2 = new Thread(inc, "increment");
-        t2.start();*/
-
-      /*  */
-
-        Thread t1 = new Thread(r2, "decrement");
-        t1.start();
-
-
+        });
 
         try {
-            t1.join();
+            System.out.println("result " + f.get());
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
-        System.out.println("finish");
+
+        for(int i = 0; i < 15; i++)
+        pool.execute(() -> {
+            /*работа со совей очередью*/
+            System.out.println(pool.getCompletedTaskCount() + " active ");
+        });
 
 
-
-
+        pool.shutdown();
 
     }
-
 
 }
