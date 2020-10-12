@@ -1,8 +1,8 @@
 package com.tibbo.datatable.concurrency;
 
 public class Node<T> {
-    T value;
-    Node<T> prevNode;
+    private T value;
+    private Node<T> prevNode;
 
     public Node(){
         this.value = null;
